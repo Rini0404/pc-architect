@@ -51,31 +51,44 @@ const getGpus = async (req, res) => {
 // @route POST /api/gpus/
 // @access Private
 const createGpu =  asyncHandler (async (req, res) => {
-  if(!req.body.text) {
-    res.status(400)
-    throw new Error('Please add text Feild');
+
+  try {
+    await client.connect();
+    const db = client.db('pcDatabase');
+    const collection = db.collection('gpu');
+    const result = await collection.insertOne(req.body);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
   }
-  const gpu = await Part.create({
-    type: req.body.type,
-    // brand: req.body.brand,
-    // model: req.body.model,
-    // rank: req.body.rank,
-    // benchmark: req.body.benchmark,
-    // url: req.body.url,
-  });
-  res.status(200).json(gpu);
 })
 // @desc update Gpus
 // @route PUT /api/gpus/:id
 // @access Private
 const updateGpu =  asyncHandler (async (req, res) => {
-  res.status(200).json({ message: `update gpu ${req.params.id}` });
+  try {
+    await client.connect();
+    const db = client.db('pcDatabase');
+    const collection = db.collection('gpu');
+    const result = await collection.updateOne({ _id: ObjectId(req.params.id) }, { $set: req.body });
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
 })
 // @desc delete Gpus
 // @route put /api/gpus/:id
 // @access Private
 const deleteGpu =  asyncHandler (async (req, res) => {
-  res.status(200).json({ message: `delete gpu ${req.params.id}` });
+  try {
+    await client.connect();
+    const db = client.db('pcDatabase');
+    const collection = db.collection('gpu');
+    const result = await collection.deleteOne({ _id: ObjectId(req.params.id) });
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
 })
 
 
