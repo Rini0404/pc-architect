@@ -12,3 +12,16 @@
 // }
 
 // module.exports = connectDB;
+
+
+
+// async function getGpus(req, res) {
+//   try {
+//     await client.connect();
+//     const db = client.db('gpu-db');
+//     const gpus = await db.collection('gpus').find({}).toArray();
+//     res.json(gpus);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: err.message });
+//   }

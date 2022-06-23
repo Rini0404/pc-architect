@@ -4,11 +4,12 @@ const {
   getGpus,
   createGpu,
   updateGpu,
-  deleteGpu
+  deleteGpu,
+  getGpusById,
 } = require('../controllers/gpuController');
 
 router.route('/').get(getGpus).post(createGpu);
-router.route('/:id').put(updateGpu).delete(deleteGpu);
+router.route('/:id').put(updateGpu).delete(deleteGpu).get(getGpusById);
 
 
 module.exports = router;
