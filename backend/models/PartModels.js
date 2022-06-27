@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const partSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'User is required']
+  },
   type: {
     type: String,
     // required: true,
