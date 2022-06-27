@@ -8,7 +8,7 @@ const {
   getGpusById,
 } = require('../controllers/gpuController');
 
-router.route('/').get(getGpus).post(createGpu);
+router.route('/gpus').get(getGpus).post(createGpu);
 router.route('/:id').put(updateGpu).delete(deleteGpu).get(getGpusById);
 
 

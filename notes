@@ -25,3 +25,92 @@
 //     console.error(err);
 //     res.status(500).json({ message: err.message });
 //   }
+
+
+// state = { 
+//   model:  '',
+//   type: '',
+//   gpuz: []
+// }
+
+
+// getGpus = () => {
+//   axios.get('api/gpus')
+//   .then((response) => {
+//     const data = response.data;
+//     this.setState({ gpuz: data });
+//     console.log(data);
+
+//   })
+//   .catch(() => {
+//     console.alert('Error getting GPUs');
+//   }
+//   )
+// }
+
+
+// componentDidMount() {
+//   this.getGpus();
+// };
+
+// ====================================================================
+
+
+// import React from 'react'
+// import axios from 'axios'
+
+
+
+// get data from api/gpus and display it in the table
+// class Home extends React.Component {
+  
+//   state = { 
+//     model:  '',
+//     type: '',
+//     gpuz: []
+//   }
+
+
+//   getGpus = () => {
+//     axios.get('api/gpus')
+//     .then((response) => {
+//       const data = response.data;
+//       this.setState({ gpuz: data });
+//       console.log(data);
+
+//     })
+//     .catch(() => {
+//       console.alert('Error getting GPUs');
+//     }
+//     )
+//   }
+
+//    displayGpus = (gpuz) => {
+//     return gpuz.map((gpu, index) => {
+//         <div key = { index }>
+//           <div>{gpu.model}</div>
+//           <div>{gpu.type}</div>
+//         </div>
+      
+//     }
+//     )
+//   }
+
+//   componentDidMount() {
+//     this.getGpus();
+//   };
+
+//   render() {
+//     return (
+//       <div>
+//         <h1>GPUs</h1>
+//         <div className = 'gpus'>
+//         {this.displayGpus(this.state.gpuz)}
+//         </div>
+//       </div>
+//     )
+//   }
+
+// }
+
+// export default Home

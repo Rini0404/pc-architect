@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // @ desc  in the second arg, we require the path to the route we want to take.
-app.use('/api/gpus', require('./routes/gpuRoutes'));
+app.use('/api/', require('./routes/gpuRoutes'));
 
 app.use(errorHandler);
 
