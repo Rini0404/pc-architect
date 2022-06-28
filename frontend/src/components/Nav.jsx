@@ -6,13 +6,14 @@ import { Link } from "react-router-dom";
 export default function IndexPage() {
   const [show, setShow] = useState(null);
   const [profile, setProfile] = useState(false);
-  const [product, setProduct] = useState(false);
-  const [deliverables, setDeliverables] = useState(false);
+  // const [product, setProduct] = useState(false);
+  // const [deliverables, setDeliverables] = useState(false);
   return (
     <>
       <div className="bg-gray-200 h-full w-full">
         {/* Code block starts */}
         <nav className="bg-white shadow xl:block hidden">
+          
           <div className="mx-auto container px-6 py-2 xl:py-0">
             <div className="flex items-center justify-between">
               <div className="inset-y-0 left-0 flex items-center xl:hidden">
@@ -33,12 +34,14 @@ export default function IndexPage() {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           >
+                            
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <rect x={4} y={4} width={6} height={6} rx={1} />
                             <rect x={14} y={4} width={6} height={6} rx={1} />
                             <rect x={4} y={14} width={6} height={6} rx={1} />
                             <rect x={14} y={14} width={6} height={6} rx={1} />
                           </svg>
+                         
                           <span className="ml-2 font-bold">Dashboard</span>
                         </div>
                       </li>
@@ -62,7 +65,7 @@ export default function IndexPage() {
                           <span className="ml-2 font-bold">Products</span>
                         </div>
                       </li>
-                      <li className="flex xl:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 flex items-center focus:text-indigo-700 focus:outline-none">
+                      <li className="flex xl:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700  items-center focus:text-indigo-700 focus:outline-none">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="icon icon-tabler icon-tabler-compass"
@@ -81,7 +84,7 @@ export default function IndexPage() {
                         </svg>
                         <span className="ml-2 font-bold">Performance</span>
                       </li>
-                      <li className="border-b border-gray-300 flex xl:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pt-2 pb-4 hover:text-indigo-700 flex items-center focus:text-indigo-700 focus:outline-none">
+                      <li className="border-b border-gray-300 flex xl:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pt-2 pb-4 hover:text-indigo-700 items-center focus:text-indigo-700 focus:outline-none">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="icon icon-tabler icon-tabler-code"
@@ -217,10 +220,12 @@ export default function IndexPage() {
                     </g>
                   </svg>
                   <h2 className="hidden sm:block text-base text-gray-700 font-bold leading-normal pl-3">
-                    The North
+                    Pc Architect
                   </h2>
                 </div>
               </div>
+            
+
               <div className="flex">
                 <div className="hidden xl:flex md:mr-6 xl:mr-16">
                   <a
@@ -324,9 +329,19 @@ export default function IndexPage() {
                 </div>
                 <div className="hidden xl:flex items-center">
                   <div className="relative md:mr-6 my-2">
+                
+                    <Link to="/SignIn">
                     <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
                       Sign in
                     </button>
+                    </Link>
+                  
+                    <Link to="/SignUp">
+                    <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
+                      Sign Up
+                    </button>
+                    </Link>
+
                   </div>
                   <div className="ml-6 relative">
                     <div
@@ -448,9 +463,11 @@ export default function IndexPage() {
             </div>
             <div className="flex items-center">
               <div className="relative mr-6 ">
+              <Link to="/SignIn">
                 <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
                   Sign in
                 </button>
+              </Link>
               </div>
               <div
                 id="menu"
@@ -481,6 +498,12 @@ export default function IndexPage() {
               </div>
             </div>
           </div>
+
+
+
+
+
+
           {/*Mobile responsive sidebar*/}
           <div
             className={
@@ -493,7 +516,7 @@ export default function IndexPage() {
               className="bg-gray-800 opacity-50 w-full h-full"
               onClick={() => setShow(!show)}
             />
-            <div className="w-64 z-40 fixed overflow-y-auto z-40 top-0 bg-white shadow h-full flex-col justify-between xl:hidden pb-4 transition duration-150 ease-in-out">
+            <div className="w-64 z-40 fixed overflow-y-auto top-0 bg-white shadow h-full flex-col justify-between xl:hidden pb-4 transition duration-150 ease-in-out">
               <div className="px-6 h-full">
                 <div className="flex flex-col justify-between h-full w-full">
                   <div>
@@ -515,7 +538,7 @@ export default function IndexPage() {
                             />
                           </svg>
                           <p className="text-base md:text-2xl text-gray-800 ml-3">
-                            The North
+                            Pc Architect
                           </p>
                         </div>
                         <div
@@ -582,9 +605,11 @@ export default function IndexPage() {
                                 />
                               </svg>
                             </div>
+                            <Link to="/Landing" >
                             <p className="text-indigo-700 xl:text-base text-base ml-3">
-                              Dashboard
+                              Landing
                             </p>
+                            </Link>
                           </div>
                         </li>
                       </a>

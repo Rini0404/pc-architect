@@ -4,7 +4,7 @@ const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 const asyncHandler = require('express-async-handler');
 const { ObjectId } = require('mongodb');
-
+// const User = require('../models/userModel');
 
       // const page = req.query.p || 0;
       // const gpusPerPage = 5;
@@ -23,10 +23,10 @@ const getGpus = async (req, res) => {
       await client.connect();
       const db = client.db('pcDatabase');
       const collection = db.collection('gpu')
-      const result = await collection.find({})
+      const result = await collection.find({user: req.user.id})
       // allows 5 results perpage
-      .skip(page * gpusPerPage)
-      .limit(gpusPerPage)
+      // .skip(page * gpusPerPage)
+      // .limit(gpusPerPage)
       .toArray((err, result) => {
         if (err) return console.log(err)
         // response sends the results, which are all the gpus
@@ -68,7 +68,7 @@ const createGpu =  asyncHandler (async (req, res) => {
     await client.connect();
     const db = client.db('pcDatabase');
     const collection = db.collection('gpu');
-    const result = await collection.insertOne(req.body);
+    const result = await collection.insertOne(req.body, {user: req.user.id});
     res.send(result);
   } catch (err) {
     console.log(err);
