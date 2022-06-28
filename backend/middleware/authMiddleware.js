@@ -15,7 +15,7 @@ const protect = asyncHandler(async (req, res, next) => {
       await client.connect();
       const db = client.db('pcDatabase');
       const collection = db.collection('user')
-      req.user = await collection.findOne({ _id: ObjectId(decoded.id) });
+      req.user = await collection.findOne(decoded.id);
       next();
     } catch (err) {
       console.log(err);

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 // const User = require('../models/userModel');
-const { MongoClient, ObjectId } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
@@ -92,17 +92,23 @@ const getMe = asyncHandler (async (req, res) => {
   await client.connect();
   const db = client.db('pcDatabase');
   const collection = db.collection('user')
-//  find by id and return user object
-  const user = await collection.findOne({ _id: ObjectId(req.user.id) });
+  const { _id, name, email } = await collection.findOne(req.user.id);
+  console.log(_id, name, email);
   res.status(200).json({
     success: true,
-    id: user.insertedId,
-    name: user.name,
-    email: user.email,
-
+    id: _id,
+    name,
+    email
   });
-})
 
+
+
+
+  // res.json({
+  //   message: 'You are logged in'
+  // });
+
+})
 
 
 
