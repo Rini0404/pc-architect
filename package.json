@@ -12,6 +12,7 @@
   "author": "Rene Ortega",
   "license": "MIT",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.2",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
