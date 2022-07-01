@@ -158,7 +158,7 @@ export default function IndexPage() {
                       </li>
                     </ul>
                     <svg
-                      onclick="MenuHandler(this,true)"
+                      // onClick="MenuHandler(this,true)"
                       aria-haspopup="true"
                       aria-label="Main Menu"
                       xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +179,7 @@ export default function IndexPage() {
                   </div>
                   <div
                     className="hidden close-m-menu text-gray-700"
-                    onclick="MenuHandler(this,false)"
+                    // onClick="MenuHandler(this,false)"
                   >
                     <svg
                       aria-label="Close"
@@ -346,7 +346,7 @@ export default function IndexPage() {
                   <div className="ml-6 relative">
                     <div
                       className="flex items-center relative"
-                      onClick={() => setProfile(!profile)}
+                      // onClick={() => setProfile(!profile)}
                     >
                       {profile && (
                         <ul className="p-2 w-40 border-r bg-white absolute rounded right-0 shadow top-0 mt-16 ">
@@ -472,7 +472,7 @@ export default function IndexPage() {
               <div
                 id="menu"
                 className="text-gray-800"
-                onClick={() => setShow(!show)}
+                // onClick={() => setShow(!show)}
               >
                 {show ? (
                   ""
@@ -514,7 +514,7 @@ export default function IndexPage() {
           >
             <div
               className="bg-gray-800 opacity-50 w-full h-full"
-              onClick={() => setShow(!show)}
+              // onClick={() => setShow(!show)}
             />
             <div className="w-64 z-40 fixed overflow-y-auto top-0 bg-white shadow h-full flex-col justify-between xl:hidden pb-4 transition duration-150 ease-in-out">
               <div className="px-6 h-full">
@@ -544,7 +544,7 @@ export default function IndexPage() {
                         <div
                           id="cross"
                           className="text-gray-800"
-                          onClick={() => setShow(!show)}
+                          // onClick={() => setShow(!show)}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -754,7 +754,7 @@ export default function IndexPage() {
                           <li className="cursor-pointer text-gray-800 pt-5 pb-3 pl-3">
                             <div className="w-6 h-6 md:w-8 md:h-8">
                               <svg
-                                xmlns="http://www.w3.org/2000/svg"
+                                // xmlns="http://www.w3.org/2000/svg"
                                 className="icon icon-tabler icon-tabler-bell"
                                 viewBox="0 0 24 24"
                                 strokeWidth={1}

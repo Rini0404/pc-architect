@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
   getGpus,
@@ -6,13 +6,16 @@ const {
   updateGpu,
   deleteGpu,
   getGpusById,
-} = require('../controllers/gpuController');
+} = require("../controllers/gpuController");
 
-const { protect } = require('../middleware/authMiddleware.js');
+const { protect } = require("../middleware/authMiddleware.js");
 
 // user has to be loggen in
-router.route('/gpus').get(protect, getGpus).post(protect, createGpu);
-router.route('/:id').put(protect, updateGpu).delete(protect, deleteGpu).get(protect, getGpusById);
-
+router.route("/gpus").get(protect, getGpus).post(protect, createGpu);
+router
+  .route("/:id")
+  .put(protect, updateGpu)
+  .delete(protect, deleteGpu)
+  .get(protect, getGpusById);
 
 module.exports = router;

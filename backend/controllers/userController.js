@@ -6,6 +6,20 @@ const { MongoClient } = require('mongodb');
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
+
+const getAllUsers = asyncHandler(async (req, res, next) => {
+  await client.connect();
+  const db = client.db('pcDatabase');
+  const collection = db.collection('user');
+  const users = await collection.find({}).toArray();
+  res.status(200).json({
+    success: true,
+    data: users,
+  });
+}
+);
+
+
 // @des : register) user
 // @route : POST /api/users
 // @access : public
@@ -124,4 +138,5 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  getAllUsers,
 }
