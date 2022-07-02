@@ -1,19 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
-
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from "../features/auth/authSlice";
 
 export default function IndexPage() {
   const [show, setShow] = useState(null);
   const [profile, setProfile] = useState(false);
   // const [product, setProduct] = useState(false);
   // const [deliverables, setDeliverables] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  }
   return (
     <>
       <div className="bg-gray-200 h-full w-full">
         {/* Code block starts */}
         <nav className="bg-white shadow xl:block hidden">
-          
           <div className="mx-auto container px-6 py-2 xl:py-0">
             <div className="flex items-center justify-between">
               <div className="inset-y-0 left-0 flex items-center xl:hidden">
@@ -34,14 +42,13 @@ export default function IndexPage() {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           >
-                            
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <rect x={4} y={4} width={6} height={6} rx={1} />
                             <rect x={14} y={4} width={6} height={6} rx={1} />
                             <rect x={4} y={14} width={6} height={6} rx={1} />
                             <rect x={14} y={14} width={6} height={6} rx={1} />
                           </svg>
-                         
+
                           <span className="ml-2 font-bold">Dashboard</span>
                         </div>
                       </li>
@@ -224,7 +231,6 @@ export default function IndexPage() {
                   </h2>
                 </div>
               </div>
-            
 
               <div className="flex">
                 <div className="hidden xl:flex md:mr-6 xl:mr-16">
@@ -329,19 +335,34 @@ export default function IndexPage() {
                 </div>
                 <div className="hidden xl:flex items-center">
                   <div className="relative md:mr-6 my-2">
-                
-                    <Link to="/SignIn">
-                    <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
-                      Sign in
-                    </button>
-                    </Link>
-                  
-                    <Link to="/SignUp">
-                    <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
-                      Sign Up
-                    </button>
-                    </Link>
-
+                    <ul>
+                      {user ? (
+                        <li className="mr-3">   
+                            <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs"
+                              onClick={onLogout}
+                            >
+                              Log Out
+                            </button>
+                        </li>
+                      ) : (
+                        <>
+                          <li className="mr-3">
+                            <Link to="/SignIn">
+                              <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
+                                Sign in
+                              </button>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to="/SignUp">
+                              <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
+                                Sign Up
+                              </button>
+                            </Link>
+                          </li>
+                        </>
+                      )}
+                    </ul>
                   </div>
                   <div className="ml-6 relative">
                     <div
@@ -463,11 +484,16 @@ export default function IndexPage() {
             </div>
             <div className="flex items-center">
               <div className="relative mr-6 ">
-              <Link to="/SignIn">
-                <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
-                  Sign in
-                </button>
-              </Link>
+                <Link to="/SignIn">
+                  <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
+                    Sign in
+                  </button>
+                </Link>
+                <Link to="/SignUp">
+                  <button className="focus:outline-none bg-gray-100 border-gray-300 border transition duration-150 ease-in-out hover:bg-gray-300 rounded text-gray-600 px-5 py-2 text-xs">
+                    Sign up
+                  </button>
+                </Link>
               </div>
               <div
                 id="menu"
@@ -498,11 +524,6 @@ export default function IndexPage() {
               </div>
             </div>
           </div>
-
-
-
-
-
 
           {/*Mobile responsive sidebar*/}
           <div
@@ -605,10 +626,10 @@ export default function IndexPage() {
                                 />
                               </svg>
                             </div>
-                            <Link to="/Landing" >
-                            <p className="text-indigo-700 xl:text-base text-base ml-3">
-                              Landing
-                            </p>
+                            <Link to="/Landing">
+                              <p className="text-indigo-700 xl:text-base text-base ml-3">
+                                Landing
+                              </p>
                             </Link>
                           </div>
                         </li>
@@ -782,4 +803,4 @@ export default function IndexPage() {
       </div>
     </>
   );
-}
+};
