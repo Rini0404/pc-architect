@@ -53,9 +53,9 @@ function SignUp() {
         password,
       };
       dispatch(register(userData));
+      console.log(userData);
     }
   };
-
   if (isLoading) {
     return <Spinner />;
   }

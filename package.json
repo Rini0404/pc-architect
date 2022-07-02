@@ -7,11 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
-    "develop": "concurrently \"cd backend && npm run server\" \"cd frontend && npm start\""
+    "dev": "concurrently \"cd backend && npm run server\" \"cd frontend && npm start\""
   },
   "author": "Rene Ortega",
   "license": "MIT",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.3",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^16.0.1",
@@ -19,7 +20,8 @@
     "express-async-handler": "^1.2.0",
     "framer-motion": "^6.3.16",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.4.0"
+    "mongoose": "^6.4.0",
+    "react-icons": "^4.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
