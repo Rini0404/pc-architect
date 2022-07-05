@@ -64,15 +64,19 @@ const getGpus = async (req, res) => {
 // @access Private
 const createGpu =  asyncHandler (async (req, res) => {
 
-  try {
-    await client.connect();
-    const db = client.db('pcDatabase');
-    const collection = db.collection('gpu');
-    const result = await collection.insertOne(req.body, {user: req.user.id});
-    res.send(result);
-  } catch (err) {
-    console.log(err);
-  }
+    if (!req.body.text) {
+      res.status(400)
+      throw new Error('Please add a text field')
+    }
+  
+    const part = await Part.create({
+      text: req.body.text,
+      user: req.user.id,
+    })
+  
+    res.status(200).json(part)
+    
+ 
 })
 // @desc update Gpus
 // @route PUT /api/gpus/:id
