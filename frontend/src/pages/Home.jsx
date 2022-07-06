@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import React from "react";
-import PartForm from '../components/PartForm';
+import axios from 'axios';
+// import PartForm from '../components/PartForm';
 
 
 function IndexPage() {
-    // const [menu, setMenu] = useState(false);
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.auth);
 
@@ -16,6 +16,15 @@ function IndexPage() {
         }
 
     }, [ user, navigate ]);
+
+    // use axios to get data from gpus
+    const [gpu, setGpu] = React.useState([]);
+    React.useEffect(() => {
+      axios.get("/api/gpus").then((res) => {
+        setGpu(res.data);
+        console.log(res.data);
+      });
+    }, []);
 
 
     return (
@@ -28,15 +37,40 @@ function IndexPage() {
                         <h1>Welcome {user && user.name } </h1>
                     </div>
                 </div>
-                <div className="landing-page-body">
-                    <div className="landing-page-body-text">
-                        <h1>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        </h1>
-                    </div>
             </div>
+        {/* section to display data */}
+        <div className="p-20 landing-page">
+            <div className="landing-page-header">
+                <div className="landing-page-header-text">
+                    <h1>Your Data</h1>
+                </div>
+                <div>
+      <table>
+        <thead key={gpu.id}>
+          <tr>
+            <th>Brand</th>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Rank</th>
+            <th>Url</th>
+          </tr>
+        </thead>
+        <tbody>
+          {gpu.map((gpu) => (
+            <tr key={gpu.id}>
+              <td>{gpu.Brand}</td>
+              <td>{gpu.Type}</td>
+              <td>{gpu.Model}</td>
+              <td>{gpu.Rank}</td>
+              <a href={gpu.URL}>{gpu.URL} </a>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
             </div>
-            <PartForm />
+        </div>
+
         </>
     );
 }

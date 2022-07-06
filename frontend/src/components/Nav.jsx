@@ -37,7 +37,7 @@ export default function IndexPage() {
                     <div className="h-4 w-4 rounded-full bg-gray-900"></div>
                     <div className="h-6 w-2 bg-sky-500"></div>
                   </div>
-                  <span className="text-base font-bold text-gray-400">SASS</span>
+                  <span className="text-base font-bold text-gray-400">Pc Architect</span>
                 </a>
                 <label
                   htmlFor="hbr"
@@ -56,6 +56,8 @@ export default function IndexPage() {
               <div className="navmenu hidden w-full flex-wrap justify-end items-center mb-16 mx-6 space-y-20 p-6 rounded-xl shadow-lg bg-white lg:space-y-0 lg:p-0 lg:m-0 lg:flex md:flex-nowrap lg:bg-transparent lg:w-7/12 lg:shadow-none">
                 <div className="text-gray-600 lg:pr-4">
                   <ul className="space-y-6 tracking-wide font-medium text-lg lg:text-sm lg:flex lg:space-y-0">
+
+                    <Link to ='/'>
                     <li>
                       <a
                         href="#"
@@ -64,6 +66,9 @@ export default function IndexPage() {
                         <span>Home</span>
                       </a>
                     </li>
+                    </Link>
+
+    
                     <li>
                       <a
                         href="#"
@@ -72,6 +77,8 @@ export default function IndexPage() {
                         <span>Portfolio</span>
                       </a>
                     </li>
+
+
                     <li>
                       <a
                         href="#"
@@ -80,6 +87,7 @@ export default function IndexPage() {
                         <span>Services</span>
                       </a>
                     </li>
+
                   </ul>
                 </div>
 

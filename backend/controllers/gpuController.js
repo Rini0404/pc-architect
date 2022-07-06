@@ -6,40 +6,34 @@ const asyncHandler = require('express-async-handler');
 const { ObjectId } = require('mongodb');
 // const User = require('../models/userModel');
 
-      // const page = req.query.p || 0;
-      // const gpusPerPage = 5;
-     
-
-
 
 // @desc get Gpus
 // @route GET /api/gpus
 // @access Private
 const getGpus = async (req, res) => {
     
-      // use parts models to get all parts
-      const page = req.query.p || 0;
-      const gpusPerPage = 5;
-      await client.connect();
-      const db = client.db('pcDatabase');
-      const collection = db.collection('gpu')
-      const result = await collection.find({user: req.user.id})
-      // allows 5 results perpage
-      // .skip(page * gpusPerPage)
-      // .limit(gpusPerPage)
-      .toArray((err, result) => {
-        if (err) return console.log(err)
-        // response sends the results, which are all the gpus
-        Part.find({}, (err, parts) => {
-          // check this out
-          if (err) return console.log(err)
-          res.send(result)
+  // use parts models to get all parts
+  const page = req.query.p || 0;
+  const gpusPerPage = 5;
+  await client.connect();
+  const db = client.db('pcDatabase');
+  const collection = db.collection('gpu')
+  const result = await collection.find({})
+  // allows 5 results perpage
+  .skip(page * gpusPerPage)
+  .limit(gpusPerPage)
+  .toArray((err, result) => {
+    if (err) return console.log(err)
+    // response sends the results, which are all the gpus
+    Part.find({}, (err, parts) => {
+      // check this out
+      if (err) return console.log(err)
+      res.send(result)
 
-        });
-      }
-    )
-    }
-
+    });
+  }
+)
+}
   // @desc get Gpu by Id
   // @route GET /api/gpus/:id
   // @access Private

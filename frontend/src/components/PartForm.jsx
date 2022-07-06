@@ -10,7 +10,7 @@ function PartForm() {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(onSubmit);
+    console.log(text);
 
     dispatch(createPart({ text }));
     // to clear from
