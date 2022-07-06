@@ -22,7 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.0",
     "react-icons": "^4.4.0",
-    "uninstall": "^0.0.0"
+    "realm-web": "^1.7.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",

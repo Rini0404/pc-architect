@@ -19,3 +19,18 @@ footer {
       @apply block lg:flex
   }
 }
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  }
+  
+  .div1 { grid-area: 2 / 2 / 10 / 6; }
+  .div2 { grid-area: 3 / 3 / 9 / 5; }
+  .div3 { grid-area: 3 / 3 / 6 / 5; }
+  .div4 { grid-area: 6 / 3 / 7 / 5; }
+  .div5 { grid-area: 7 / 3 / 8 / 5; }
+  .div6 { grid-area: 8 / 3 / 9 / 5; }
