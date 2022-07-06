@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import React from "react";
 import axios from "axios";
 // import PartForm from '../components/PartForm';
 import { Card, Input } from "semantic-ui-react";
+import Favorites from "../pages/Favs";
+
 
 function IndexPage() {
+ 
   const [gpu, setGpu] = React.useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
+  const [ users, SetUsers ] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+  // to add favorites to the database under the user. id
+  const favs = []
+
+
 
   useEffect(() => {
     if (!user) {
@@ -22,9 +30,19 @@ function IndexPage() {
   React.useEffect(() => {
     axios.get("/api/gpus").then((res) => {
       setGpu(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     });
   }, []);
+
+  // useEffect to search users and will be used later for getting saved parts to a user
+  useEffect(() => {
+    axios.get("/api/users/all").then((res) => {
+      SetUsers(res.data);
+      console.log(res.data);
+    }
+    );
+  }, []);
+  
 
   // search gpus
   const searchGpus = (searchValue) => {
@@ -38,10 +56,17 @@ function IndexPage() {
           .includes(searchInput.toLowerCase());
       });
       setFilteredResults(filteredData);
+    
     } else {
       setFilteredResults(gpu);
     }
   };
+
+  // add to favorites
+  const handleAddFav=(item)=>{
+    favs.push(item);
+    localStorage.setItem("fav", JSON.stringify(favs));
+  }
 
   return (
     <>
@@ -83,18 +108,21 @@ function IndexPage() {
         </div>
       </div>
       {searchInput.length > 1
-            ? filteredResults.map((item) => {
+            ? filteredResults?.map((item) => {
                 return (
                   // card that display gpus searched
                   <div className="p-10 landing-page">
-                  <div class="parent border justify-items-center ">
-                    <div class="div1"> </div>
-                    <div class="div2 "> </div>
-                    <div class="div3">{item.URL}</div>
-                    <div class="div4">{item.Brand} </div>
-                    <div class="div5">{item.Model} </div>
-                    <div class="div6">{item.Type} </div>
-                  </div>
+                    <div class="parent border justify-items-center ">
+                      <div class="div1"> </div>
+                      <div class="div2 "> </div>
+                      <div class="div3">{item.URL}</div>
+                      <div class="div4">{item.Brand} </div>
+                      <div class="div5">{item.Model} </div>
+                      <div class="div6">{item.Type} </div>
+                    </div>
+                    <button 
+                    onClick={()=>{handleAddFav(item)}}
+                    >Add Fav</button>
                   </div>
                 );
               })
@@ -109,6 +137,8 @@ function IndexPage() {
                   </Card>
                 );
               })}
+
+            <Favorites />
     </>
   );
 }
