@@ -1,146 +1,78 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import React from "react";
-import axios from "axios";
-// import PartForm from '../components/PartForm';
-import { Card, Input } from "semantic-ui-react";
-import Favorites from "../pages/Favs";
-
+import Pic from "../imgs/pcPic1.jpg"
+import Heros from '../components/Heros';
+import Welcome from "../components/Welcome";
 
 function IndexPage() {
- 
-  const [gpu, setGpu] = React.useState([]);
-  const [filteredResults, setFilteredResults] = useState([]);
-  const [ users, SetUsers ] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  // to add favorites to the database under the user. id
-  const favs = []
-
-
-
   useEffect(() => {
     if (!user) {
       navigate("/SignIn");
     }
   }, [user, navigate]);
 
-  React.useEffect(() => {
-    axios.get("/api/gpus").then((res) => {
-      setGpu(res.data);
-      // console.log(res.data);
-    });
-  }, []);
+  return (
 
-  // useEffect to search users and will be used later for getting saved parts to a user
-  useEffect(() => {
-    axios.get("/api/users/all").then((res) => {
-      SetUsers(res.data);
-      console.log(res.data);
-    }
-    );
-  }, []);
+    <>    
+
   
 
-  // search gpus
-  const searchGpus = (searchValue) => {
-    setSearchInput(searchValue);
-    console.log(searchValue);
-    if (searchInput !== "") {
-      const filteredData = gpu.filter((item) => {
-        return Object.values(item)
-          .join(" ")
-          .toLowerCase()
-          .includes(searchInput.toLowerCase());
-      });
-      setFilteredResults(filteredData);
-    
-    } else {
-      setFilteredResults(gpu);
-    }
-  };
-
-  // add to favorites
-  const handleAddFav=(item)=>{
-    favs.push(item);
-    localStorage.setItem("fav", JSON.stringify(favs));
-  }
-
-  return (
-    <>
-      <div className="p-20 landing-page">
-        <div className="landing-page-header">
-          <div className="landing-page-header-text">
-            {/* passes in user data
-                            can change it to email, if i want an email instead of name */}
-            <h1>Welcome {user && user.name} </h1>
-          </div>
-        </div>
-      </div>
-      {/* section to display data */}
-      <div className="p-10 landing-page">
-        <div className="landing-page-header">
-          <div className="landing-page-header-text">
-            <h1>Your Data</h1>
-          </div>
-          {/* search feild  black border*/}
-          <div className="border black-border search-bar">
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchInput}
-              onChange={(e) => searchGpus(e.target.value)}
+    <div className="py-12 bg-yellow-50overflow-y-hidden">
+      {/* Code block starts */}
+      <dh-component>
+        <div className="w-full px-6">
+          <div className="mt-8 relative rounded-lg bg-indigo-700 container mx-auto flex flex-col items-center pt-12 sm:pt-24 pb-24 sm:pb-32 md:pb-48 lg:pb-56 xl:pb-64">  
+          <Welcome/>
+            <img
+              className="mr-2 lg:mr-12 mt-2 lg:mt-12 absolute right-0 top-0"
+              src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg2.svg"
+              alt="bg"
             />
-            <button
-              type="button"
-              className="relative px-8 py-4 ml-4 overflow-hidden font-semibold rounded dark:bg-gray-100 dark:text-gray-900"
-              // onClick={() => searchGpus("")}
-            >
-              With banner
-              <span className="absolute top-0 right-0 px-5 py-1 text-xs tracking-wider text-center uppercase whitespace-no-wrap origin-bottom-left transform rotate-45 -translate-y-full translate-x-1/3 dark:bg-violet-400">
-                Hi!
-              </span>
-            </button>
+            <img
+              className="ml-2 lg:ml-12 mb-2 lg:mb-12 absolute bottom-0 left-0"
+              src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg3.svg"
+              alt="bg"
+            />
+            <div className="w-11/12 sm:w-2/3 mb-5 sm:mb-10">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-white font-bold leading-tight">
+                Search from all the computer components you need!
+              </h1>
+            </div>
+            <div className="flex justify-center items-center mb-10 sm:mb-20">
+            <Link to="/Search">
+            <button className="hover:text-white hover:bg-transparent lg:text-xl hover:border-white border bg-white transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700	focus:ring-white rounded text-indigo-700 px-4 sm:px-8 py-1 sm:py-3 text-sm">
+                Search Now!
+              </button>
+            </Link>
+            <Link to="/Favs">
+              <button className="hover:bg-white hover:text-indigo-600 lg:text-xl hover:border-indigo-600 ml-3 sm:ml-6 bg-transparent transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700 focus:ring-white hover:bg-indigo-700-800 rounded border border-white text-white px-4 sm:px-8 py-1 sm:py-3 text-sm">
+                View Favorites
+              </button>
+            </Link>
+            </div>
           </div>
-          {/* card to display gpus searched */}
+          <div className="container mx-auto flex justify-center md:-mt-56 -mt-20 sm:-mt-40">
+            <div className="relative sm:w-2/3 w-11/12">
+              <img
+                className="rounded-lg shadow-2xl"
+                src={Pic}
+                alt="Sample Page"
+                role="img"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      {searchInput.length > 1
-            ? filteredResults?.map((item) => {
-                return (
-                  // card that display gpus searched
-                  <div className="p-10 landing-page">
-                    <div class="parent border justify-items-center ">
-                      <div class="div1"> </div>
-                      <div class="div2 "> </div>
-                      <div class="div3">{item.URL}</div>
-                      <div class="div4">{item.Brand} </div>
-                      <div class="div5">{item.Model} </div>
-                      <div class="div6">{item.Type} </div>
-                    </div>
-                    <button 
-                    onClick={()=>{handleAddFav(item)}}
-                    >Add Fav</button>
-                  </div>
-                );
-              })
-            : gpu.map((item) => {
-                return (
-                  <Card key={item.id}>
-                    <Card.Content>
-                      <Card.Header>{item.Type}</Card.Header>
-                      <Card.Meta>{item.Brand}</Card.Meta>
-                      <Card.Description>{item.Model}</Card.Description>
-                    </Card.Content>
-                  </Card>
-                );
-              })}
+      </dh-component>
+      {/* Code block ends */}
+    </div>
 
-            <Favorites />
+    <Heros />
     </>
   );
 }
 
 export default IndexPage;
+
