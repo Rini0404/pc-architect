@@ -39,21 +39,20 @@ function SignIn() {
     dispatch(reset());
   }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
 
-
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const userData = {
       email,
       password,
-    }
+    };
 
-    dispatch(login(userData))
+    dispatch(login(userData));
+  };
+
+  if (isLoading) {
+    return <Spinner />;
   }
-
-    if (isLoading) {
-        return <Spinner />;
-    }
 
   return (
     <>
@@ -85,9 +84,7 @@ function SignIn() {
                   <h2 class="mb-8 text-2xl text-cyan-900 font-bold">
                     Sign in to your account
                   </h2>
-                  <form 
-                  onSubmit={onSubmit}
-                  action="" class="space-y-8">
+                  <form onSubmit={onSubmit} action="" class="space-y-8">
                     <div class="space-y-2">
                       <label for="email" class="text-gray-700">
                         Email
@@ -128,7 +125,7 @@ function SignIn() {
                     </div>
 
                     <button
-                    // onSubmit={onSubmit}
+                      // onSubmit={onSubmit}
                       type="submit"
                       class="w-full py-3 px-6 rounded-md bg-sky-600
                     focus:bg-sky-700 active:bg-sky-500"
