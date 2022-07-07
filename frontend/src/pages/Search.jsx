@@ -144,7 +144,7 @@ function Search() {
           </div>
         </div>
       </div>
-      
+
       {/* section to display data */}
       <div className="flex justify-center">
         <div className="container h-100 border border-black">
@@ -184,20 +184,20 @@ function Search() {
                 </svg>
               </div>
               <span>
-               Your Results are below! Hit The heart to add to your favorites!
+                Your Results are below! Hit The heart to add to your favorites!
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 md:-mx-8">
           {filteredResults.map((item) => {
             // if for what icon matches specific seacrh
             if (item.Type === "GPU") {
               return (
-                <div className="w-full md:w-1/2 p-3">
+                <div className="md:p-12 lg:p-8 xl:p-12 p-3">
                   <div
-                    className="relative block p-8 border border-gray-100 shadow-xl rounded-xl"
+                    className="relative block p-8 border border-gray-100 shadow-xl rounded-xl "
                     href=""
                   >
                     <span className="absolute right-4 top-4 rounded-full px-3 py-1.5 bg-green-100 text-green-600 font-medium text-xs">
@@ -210,10 +210,10 @@ function Search() {
                         {item.Model}
                       </h5>
 
-                      <p className="hidden mt-2 text-sm sm:block text-yellow-700">
+                      <p className=" mt-2 text-sm sm:block text-yellow-700">
                         {item.Brand}
                       </p>
-                      <p className="hidden mt-2 text-sm sm:block">
+                      <p className=" mt-2 text-sm sm:block">
                         Gpu Rank: {item.Rank}
                         <br></br>
                         Benchmark: {item.Benchmark}
@@ -236,7 +236,7 @@ function Search() {
               );
             } else if (item.Type === "CPU") {
               return (
-                <div className="w-full md:w-1/2 p-3">
+                <div className="md:p-12 lg:p-8 xl:p-12 p-3">
                   <div
                     className="relative block p-8 border border-gray-100 shadow-xl rounded-xl"
                     href=""
@@ -251,10 +251,10 @@ function Search() {
                         {item.Model}
                       </h5>
 
-                      <p className="hidden mt-2 text-sm sm:block text-yellow-700">
+                      <p className=" mt-2 text-sm sm:block text-yellow-700">
                         {item.Brand}
                       </p>
-                      <p className="hidden mt-2 text-sm sm:block">
+                      <p className=" mt-2 text-sm sm:block">
                         Cpu Rank: {item.Rank}
                         <br></br>
                         Benchmark: {item.Benchmark}
@@ -277,7 +277,7 @@ function Search() {
               );
             } else if (item.Type === "RAM") {
               return (
-                <div className="w-full md:w-1/2 p-3">
+                <div className="md:p-12 lg:p-8 xl:p-12 p-3">
                   <div
                     className="relative block p-8 border border-gray-100 shadow-xl rounded-xl"
                     href=""
@@ -292,10 +292,10 @@ function Search() {
                         {item.Model}
                       </h5>
 
-                      <p className="hidden mt-2 text-sm sm:block text-yellow-700">
+                      <p className=" mt-2 text-sm sm:block text-yellow-700">
                         {item.Brand}
                       </p>
-                      <p className="hidden mt-2 text-sm sm:block">
+                      <p className=" mt-2 text-sm sm:block">
                         Ram Rank: {item.Rank}
                         <br></br>
                         Benchmark: {item.Benchmark}
@@ -318,7 +318,7 @@ function Search() {
               );
             } else if (item.Type === "SSD") {
               return (
-                <div className="w-full md:w-1/2 p-3">
+                <div className="md:p-12 lg:p-8 xl:p-12 p-3">
                   <div
                     className="relative block p-8 border border-gray-100 shadow-xl rounded-xl"
                     href=""
@@ -333,10 +333,10 @@ function Search() {
                         {item.Model}
                       </h5>
 
-                      <p className="hidden mt-2 text-sm sm:block text-yellow-700">
+                      <p className=" mt-2 text-sm sm:block text-yellow-700">
                         {item.Brand}
                       </p>
-                      <p className="hidden mt-2 text-sm sm:block">
+                      <p className=" mt-2 text-sm sm:block">
                         Ssd Rank: {item.Rank}
                         <br></br>
                         Benchmark: {item.Benchmark}
@@ -359,7 +359,7 @@ function Search() {
               );
             } else if (item.Type === "USB") {
               return (
-                <div className="w-full md:w-1/2 p-3">
+                <div className="md:p-12 lg:p-8 xl:p-12 p-3">
                   <div
                     className="relative block p-8 border border-gray-100 shadow-xl rounded-xl"
                     href=""
@@ -374,10 +374,10 @@ function Search() {
                         {item.Model}
                       </h5>
 
-                      <p className="hidden mt-2 text-sm sm:block text-yellow-700">
+                      <p className=" mt-2 text-sm sm:block text-yellow-700">
                         {item.Brand}
                       </p>
-                      <p className="hidden mt-2 text-sm sm:block">
+                      <p className=" mt-2 text-sm sm:block">
                         Usb Rank: {item.Rank}
                         <br></br>
                         Benchmark: {item.Benchmark}
@@ -400,7 +400,7 @@ function Search() {
               );
             } else if (item.Type === "HDD") {
               return (
-                <div className="w-full md:w-1/2 p-3">
+                <div className="md:p-12 lg:p-8 xl:p-12 p-3">
                   <div
                     className="relative block p-8 border border-gray-100 shadow-xl rounded-xl"
                     href=""
@@ -415,10 +415,10 @@ function Search() {
                         {item.Model}
                       </h5>
 
-                      <p className="hidden mt-2 text-sm sm:block text-yellow-700">
+                      <p className=" mt-2 text-sm sm:block text-yellow-700">
                         {item.Brand}
                       </p>
-                      <p className="hidden mt-2 text-sm sm:block">
+                      <p className=" mt-2 text-sm sm:block">
                         Hdd Rank: {item.Rank}
                         <br></br>
                         Benchmark: {item.Benchmark}

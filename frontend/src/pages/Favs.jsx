@@ -7,11 +7,11 @@ function Favorites() {
   return (
     <>
       <h1 className="p-20">Your Favorites Here!</h1>
-      <div className="flex flex-wrap">
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 md:-mx-8">
       {/* display favorites as cards */}
       {favs && favs.map((item) => {
         return (
-          <div className="w-full md:w-1/2 p-3">
+          <div className="md:p-12 lg:p-8 xl:p-12 p-3">
                 <div
                   class="relative block p-8 border border-gray-100 shadow-xl rounded-xl"
                   href=""
@@ -40,10 +40,10 @@ function Favorites() {
                       {item.Model}
                     </h5>
 
-                    <p class="hidden mt-2 text-sm sm:block text-yellow-700">
+                    <p class=" mt-2 text-sm sm:block text-yellow-700">
                       {item.Brand}
                     </p>
-                    <p class="hidden mt-2 text-sm sm:block">
+                    <p class=" mt-2 text-sm sm:block">
                     Gpu Rank: {item.Rank}<br></br>
                     Benchmark: {item.Benchmark}<br></br>
                     Samples: {item.Samples}
