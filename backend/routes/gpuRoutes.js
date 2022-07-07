@@ -6,12 +6,28 @@ const {
   updateGpu,
   deleteGpu,
   getGpusById,
+  getCpus,
+  getRams,
+  getSsds,
+  getUsb,
+  getHdd,
+
 } = require("../controllers/gpuController");
 
 // const { protect } = require("../middleware/authMiddleware.js");
 
 // user has to be loggen in
-router.route("/gpus").get( getGpus).post( createGpu);
+router.route("/gpus")
+.get( getGpus )
+.post( createGpu );
+
+router.route("/cpus").get( getCpus );
+router.route("/rams").get( getRams );
+router.route("/ssds").get( getSsds );
+router.route("/usbs").get( getUsb );
+router.route("/hdds").get( getHdd );
+
+
 router
   .route("/:id")
   .put( updateGpu)

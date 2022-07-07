@@ -82,7 +82,6 @@ export default function IndexPage() {
                         </a>
                       </li>
                     </Link>
-
                     <li>
                       <a
                         target="_blank"

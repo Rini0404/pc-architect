@@ -13,8 +13,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // @ desc  in the second arg, we require the path to the route we want to take.
 app.use("/api/", require("./routes/gpuRoutes"));
-// app.use("/api/users/", require("./routes/userRoutes"));
 app.use('/api/users', require('./routes/userRoutes'));
+
 
 
 app.use(errorHandler);
