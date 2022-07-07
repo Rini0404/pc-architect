@@ -5,16 +5,18 @@ import RamPic from "../imgs/ram.png";
 import UsbPic from "../imgs/usb-drive.png";
 import HddPic from "../imgs/hard-disk.png";
 import SsdPic from "../imgs/ssd-drive.png";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
+import { useSelector } from "react-redux";
+
 
 function Favorites() {
   const favs = JSON.parse(localStorage.getItem("fav"));
-  console.log(favs);
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <>
-      <h1 className="p-20">Your Favorites Here!</h1>
+      <h1 className="p-20">Hello {user && user.name}, you're favorites are here!</h1>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 md:-mx-8">
       {/* display favorites as cards */}
       {favs && favs.map((item) => {
