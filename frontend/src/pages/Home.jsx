@@ -17,7 +17,7 @@ function IndexPage() {
 
   return (
     <>
-      <div className="py-12 bg-yellow-50overflow-y-hidden">
+      <div className="py-12 bg-yellow-50 overflow-y-hidden">
         {/* Code block starts */}
         <dh-component>
           <div className="w-full px-6">

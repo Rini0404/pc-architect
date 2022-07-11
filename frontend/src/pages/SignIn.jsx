@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login, reset } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
+import Pic1 from "../imgs/sigIn.webp";
+import { Link } from "react-router-dom";
 
 function SignIn() {
   const [formData, setFormData] = useState({
@@ -32,9 +34,10 @@ function SignIn() {
   useEffect(() => {
     if (isSuccess || user) {
       navigate("/");
+      toast.success("Welcome Back!");
     }
     if (isError) {
-      toast.error(message);
+      toast.error("Invalid Credentials");
     }
     dispatch(reset());
   }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
@@ -55,29 +58,23 @@ function SignIn() {
   }
 
   return (
-    <>
+    <div className="bg-yellow-50">
       <div
         class="relative py-16 
                 before:absolute before:inset-0 before:w-full before:h-[50%] before:bg-gray-200"
       >
         <div class="relative container m-auto px-6 text-gray-500 md:px-12 xl:px-40">
           <div class="m-auto space-y-8 md:w-8/12 lg:w-full">
-            <img
-              src="images/tailus.svg"
-              loading="lazy"
-              class="w-36 ml-4"
-              alt="tailus logo"
-            />
             <div class="rounded-xl border bg-opacity-50 backdrop-blur-2xl bg-white shadow-xl">
               <div class="lg:grid lg:grid-cols-2">
                 <div class="rounded-lg lg:block" hidden>
                   <img
-                    src="images/smiling.webp"
-                    class="rounded-l-xl object-cover"
+                    src={Pic1}
+                    class="rounded-l-xl object-cover w-full h-full"
                     loading="lazy"
-                    height=""
-                    width=""
-                    alt="music mood"
+                    // height and width
+                    height="100%"
+                    width="100%"
                   />
                 </div>
                 <div class="p-6 sm:p-16">
@@ -106,11 +103,6 @@ function SignIn() {
                         <label for="pwd" class="text-gray-700">
                           Password
                         </label>
-                        {/* <button class="p-2 -mr-2" type="reset">
-                          <span class="text-sm text-sky-500">
-                            Forgot your password ?
-                          </span>
-                        </button> */}
                       </div>
                       <input
                         type="password"
@@ -135,27 +127,25 @@ function SignIn() {
 
                     <p class="border-t pt-6 text-sm">
                       Don't have an account ?
-                      <a href="#" class="text-sky-500">
-                        Sign up
-                      </a>
+                      <Link to="/SignUp">
+                        <a href="#" class="text-sky-500">
+                          {" "}
+                          Sign up{" "}
+                        </a>
+                      </Link>
                     </p>
                   </form>
                 </div>
               </div>
             </div>
             <div class="text-center space-x-4">
-              <span>&copy; tailus</span>
-              <a href="#" class="text-sm hover:text-sky-900">
-                Contact
-              </a>
-              <a href="#" class="text-sm hover:text-sky-900">
-                Privacy & Terms
-              </a>
+              <span>&copy; Pc Architect</span>
+              <span>&copy; 2022</span>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

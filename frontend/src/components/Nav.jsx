@@ -59,8 +59,8 @@ export default function IndexPage() {
                 </label>
               </div>
               <div className="navmenu hidden w-full flex-wrap justify-end items-center mb-16 mx-6 space-y-20 p-6 rounded-xl shadow-lg bg-white lg:space-y-0 lg:p-0 lg:m-0 lg:flex md:flex-nowrap lg:bg-transparent lg:w-7/12 lg:shadow-none">
-                <div className="text-gray-600 lg:pr-4">
-                  <ul className="space-y-6 tracking-wide font-medium text-lg lg:text-sm lg:flex lg:space-y-0">
+                <div className="text-gray-600 lg:pr-4 ">
+                  <ul className=" tracking-wide font-medium text-lg lg:text-sm lg:flex lg:space-y-0">
                     <Link to="/">
                       <li>
                         <a
@@ -68,6 +68,17 @@ export default function IndexPage() {
                           className="block md:px-4 transition hover:text-sky-700"
                         >
                           <span>Home</span>
+                        </a>
+                      </li>
+                    </Link>
+
+                    <Link to="search">
+                      <li>
+                        <a
+                          href="#"
+                          className="block md:px-4 transition hover:text-sky-700"
+                        >
+                          <span>Search</span>
                         </a>
                       </li>
                     </Link>
@@ -94,7 +105,7 @@ export default function IndexPage() {
                   </ul>
                 </div>
 
-                <div className="w-full space-y-2 border-sky-200 flex flex-col -ml-1 sm:flex-row lg:space-y-0 md:w-max lg:border-l">
+                <div className="w-full space-y-2 border-sky-200 flex flex-col-ml-1 sm:flex-row lg:space-y-0 md:w-max lg:border-l">
                   {user ? (
                     <button
                       onClick={onLogout}

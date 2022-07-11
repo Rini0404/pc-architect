@@ -15,7 +15,7 @@ function App() {
         <div className="App">
           <Nav />
           <Pages />
-          {/* <Footer /> */}
+          <Footer />
         </div>
         <ToastContainer />
       </>

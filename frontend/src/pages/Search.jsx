@@ -144,6 +144,14 @@ function Search() {
           </div>
         </div>
       </div>
+      {/* header above search bar message */}
+      <div className="p-20 landing-page flex justify-center">
+        <div className="landing-page-header ">
+          <div className="landing-page-header-text ">
+            <h1>Search by part, name, or type! Ex: search for a 3080 ti!</h1>
+          </div>
+        </div>
+      </div>
 
       {/* section to display data */}
       <div className="flex justify-center">
