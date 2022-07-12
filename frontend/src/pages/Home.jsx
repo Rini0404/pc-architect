@@ -35,7 +35,7 @@ function IndexPage() {
               />
               <div className="w-11/12 sm:w-2/3 mb-5 sm:mb-10">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-white font-bold leading-tight">
-                  Search from all the computer components you need!
+                  Search for all the computer components you need!
                 </h1>
               </div>
               <div className="flex justify-center items-center mb-10 sm:mb-20">

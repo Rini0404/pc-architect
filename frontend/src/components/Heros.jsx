@@ -32,7 +32,7 @@ function Heros() {
                   First step
                 </h4>
                 <p className="text-gray-600 group-hover:text-yellow-200">
-                Pick out your parts! It is crucial to know which component goes with what. For example, some motherboards cant handle certain GPUs. Or, a power supply won't have too much wattage for all your components. There is alot of science behind components working together at their max capacity. For instance, a certain CPU cant handle the power of a certain GPU. Your Pc will run, but it will bottleneck. Aslo, if you'e taking the water cooled route, buy pick out the specific water pipes and have prior knowledge before installing that! 
+                Pick out your parts! It is crucial to know which component goes with what. For example, some motherboards cant handle certain GPUs. Or, a power supply won't have too much wattage for all your components. There is a lot of science behind components working together at their max capacity. For instance, a certain CPU cant handle the power of a certain GPU. Your Pc will run, but it will bottleneck. Also, if you're taking the water-cooled route, buy pick out the specific water pipes and have prior knowledge before installing that! 
 
                 </p>
               </div>
@@ -62,15 +62,14 @@ function Heros() {
                   Second Step
                 </h4>
                 <p className="text-gray-600 group-hover:text-yellow-200">
-                  Buy your parts! A great way to buy parts is to always price
+                Buy your parts! A great way to buy parts is to always price
                   match. Make sure to get them at a great price. Not only at a
                   great price but from a reputable source. Now, graphics cards
-                  can be bought at lower than Msrp however if you're buying one
+                  can be bought at lower than MSRP however if you're buying one
                   from a crypto miner, make sure the GPU has been well taken
-                  care of! Check out the CPUS for bent pins or missing ones! A
-                  bent pin doesn't always mean the cpu is non-functionable. You
-                  may be able to readajust the pin! Same goes with all second
-                  hand used components beaware.
+                  care of! Check out the CPUs for bent pins or missing ones! A
+                  bent pin doesn't always mean the CPU is non-functional. You
+                  may be able to readjust the pin! The same goes with all second-hand used components be aware.
                 </p>
               </div>
               <img
@@ -99,14 +98,14 @@ function Heros() {
                   Final Step
                 </h4>
                 <p className="text-gray-600 group-hover:text-yellow-200">
-                  Lastly, some people ought to buy prebuilt pcs. That is a great
+                Lastly, some people ought to buy prebuilt pcs. That is a great
                   choice, but the satisfaction you get from building your
                   masterpiece is a great feeling. When you take the approach of
-                  tackling building your own rig, make sure you've studied how
+                  tackling building your rig, make sure you've studied how
                   to build one. Read or watch on how to build a computer.
-                  Nothing is worse than bending a CPU pin, booting up your all
-                  put together Pc and the BIOS not running, or even a leaky
-                  water cooling pipe. Now a days there are awsome videos to see!
+                  Nothing is worse than bending a CPU pin, booting up your 
+                  put-together Pc and the BIOS not running, or even leaky
+                  water cooling pipe. Nowadays there are awesome videos to see!
                   Be ready to spend 1-3 hours putting up your new beast!
                 </p>
               </div>

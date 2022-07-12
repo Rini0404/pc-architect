@@ -50,7 +50,7 @@ function Footer() {
 
             <p className="max-w-md mx-auto mt-6 leading-relaxed text-center text-gray-400 lg:text-left">
               Hello! I hope you're having a great time with my website. I'm glad you have decided to visit.
-              If you're interested in more of my work, here are a fiew links to my social networks!
+              If you're interested in more of my work, here are a few links to my social networks!
             </p>
           </div>
 

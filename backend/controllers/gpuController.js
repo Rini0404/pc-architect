@@ -12,15 +12,15 @@ const { ObjectId } = require("mongodb");
 const getGpus = async (req, res) => {
   // use parts models to get all parts
   const page = req.query.p || 0;
-  const gpusPerPage = 20;
+  const gpusPerPage = 500;
   await client.connect();
   const db = client.db("pcDatabase");
   const collection = db.collection("gpu");
   const result = await collection
     .find({})
     // allows 5 results perpage
-    // .skip(page * gpusPerPage)
-    // .limit(gpusPerPage)
+    .skip(page * gpusPerPage)
+    .limit(gpusPerPage)
     .toArray((err, result) => {
       if (err) return console.log(err);
       // response sends the results, which are all the gpus
@@ -38,10 +38,15 @@ const getGpus = async (req, res) => {
 
 const getCpus = async (req, res) => {
   // get cpus from 'cpu collection
+  const page = req.query.p || 0;
+  const gpusPerPage = 90;
   await client.connect();
   const db = client.db("pcDatabase");
   const collection = db.collection("cpu");
   const result = await collection.find({})
+    // allows 5 results perpage
+    .skip(page * gpusPerPage)
+    .limit(gpusPerPage)
   .toArray((err, result) => {
     if (err) return console.log(err);
     res.send(result);
@@ -54,10 +59,15 @@ const getCpus = async (req, res) => {
 // @access Private
 const getRams = async (req, res) => {
   // get ram from 'ram collection
+  const page = req.query.p || 0;
+  const gpusPerPage = 90;
   await client.connect();
   const db = client.db("pcDatabase");
   const collection = db.collection("ram");
   const result = await collection.find({})
+    // allows 5 results perpage
+    .skip(page * gpusPerPage)
+    .limit(gpusPerPage)
   .toArray((err, result) => {
     if (err) return console.log(err);
     res.send(result);
@@ -70,10 +80,15 @@ const getRams = async (req, res) => {
 // @access Private
 const getSsds = async (req, res) => {
   // get ram from 'ram collection
+  const page = req.query.p || 0;
+  const gpusPerPage = 90;
   await client.connect();
   const db = client.db("pcDatabase");
   const collection = db.collection("ssd");
   const result = await collection.find({})
+    // allows 5 results perpage
+    .skip(page * gpusPerPage)
+    .limit(gpusPerPage)
   .toArray((err, result) => {
     if (err) return console.log(err);
     res.send(result);
@@ -82,10 +97,15 @@ const getSsds = async (req, res) => {
 }
 
 const getUsb = async (req, res) => {
+  const page = req.query.p || 0;
+  const gpusPerPage = 90;
   await client.connect();
   const db = client.db("pcDatabase");
   const collection = db.collection("usb");
   const result = await collection.find({})
+    // allows 5 results perpage
+    .skip(page * gpusPerPage)
+    .limit(gpusPerPage)
   .toArray((err, result) => {
     if (err) return console.log(err);
     res.send(result);
@@ -94,10 +114,15 @@ const getUsb = async (req, res) => {
 }
 
 const getHdd = async (req, res) => {
+  const page = req.query.p || 0;
+  const gpusPerPage = 90;
   await client.connect();
   const db = client.db("pcDatabase");
   const collection = db.collection("hdd");
   const result = await collection.find({})
+    // allows 5 results perpage
+    .skip(page * gpusPerPage)
+    .limit(gpusPerPage)
   .toArray((err, result) => {
     if (err) return console.log(err);
     res.send(result);
@@ -138,7 +163,7 @@ const createGpu = asyncHandler(async (req, res) => {
     user: req.user.id,
   });
 
-  res.status(200).json(part);
+  res.status(900).json(part);
 });
 // @desc update Gpus
 // @route PUT /api/gpus/:id

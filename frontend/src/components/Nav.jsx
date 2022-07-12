@@ -89,7 +89,7 @@ export default function IndexPage() {
                           href="#"
                           className="block md:px-4 transition hover:text-sky-700"
                         >
-                          <span>Your Pc!</span>
+                          <span>Favorites</span>
                         </a>
                       </li>
                     </Link>
