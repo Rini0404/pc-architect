@@ -23,10 +23,13 @@
 <img width="924" alt="Pc-a3" src="https://user-images.githubusercontent.com/95727555/178578597-8a540955-6323-496f-8292-7dace3ef7a9a.png">
 <img width="959" alt="pc-a4" src="https://user-images.githubusercontent.com/95727555/178578514-db52304b-f7ab-4c24-aab8-198cbc042cc9.png">
 <img width="950" alt="pc-a5" src="https://user-images.githubusercontent.com/95727555/178578550-292f8e98-a2af-405f-b2d4-6097a60135bb.png">
+ Users Can Sign In and Sign Up! With the help of JWTs.
 <img width="959" alt="pc-a6" src="https://user-images.githubusercontent.com/95727555/178578537-d36707d6-97ef-40fb-93d1-0e1746caba57.png">
+ Mobile Responsive!
 <img width="368" alt="mob-a1" src="https://user-images.githubusercontent.com/95727555/178579088-9f29e9c2-2c0a-4244-996b-5c5973aba155.png">
-![mob-a2](https://user-images.githubusercontent.com/95727555/178579090-e4415d02-34f5-48c4-9aec-6b2fec079f36.png)
-### 🏠 [Homepage](https://pc-architect.herokuapp.com/SignIn)
+
+
+Live App! (https://pc-architect.herokuapp.com)
 
 ### ✨ [Demo Here For Mobile!](https://drive.google.com/file/d/1j5VhObqUsVa2vq3lug7KJHa-rGj1D_P8/view)
 ### ✨ [Demo Here For Pc!](https://drive.google.com/file/d/1oMGrEtmlvVR6R7UW5RMINZLhZyED7GeZ/view)
