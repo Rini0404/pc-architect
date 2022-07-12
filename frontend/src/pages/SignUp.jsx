@@ -42,7 +42,7 @@ function SignUp() {
     }));
   }; 
   
-  const notify = () => toast("Success!");
+  // const notify = () => toast("Success!");
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +56,6 @@ function SignUp() {
         password,
       };
       dispatch(register(userData));
-      notify();
     }
     
   };
@@ -64,6 +63,7 @@ function SignUp() {
     return <Spinner />;
   }
 
+  
 
 
   return (

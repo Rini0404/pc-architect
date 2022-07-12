@@ -31,13 +31,17 @@ function SignIn() {
     }));
   };
 
+  const notify = () => toast("Success!");
+
   useEffect(() => {
     if (isSuccess || user) {
       navigate("/");
-      toast.success("Welcome Back!");
     }
     if (isError) {
       toast.error("Invalid Credentials");
+    }
+    if(isSuccess) {
+      notify();
     }
     dispatch(reset());
   }, [user, isSuccess, isLoading, isError, message, navigate, dispatch]);
