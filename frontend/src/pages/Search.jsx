@@ -197,6 +197,10 @@ function Search() {
             </div>
           </div>
         </div>
+        {/* <div className="pb-72 landing-page flex justify-center">
+        </div>
+        <div className="pb-2 landing-page flex justify-center">
+        </div> */}
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 md:-mx-8">
           {filteredResults.map((item) => {
