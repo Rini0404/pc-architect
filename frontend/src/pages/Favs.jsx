@@ -5,15 +5,23 @@ import RamPic from "../imgs/ram.png";
 import UsbPic from "../imgs/usb-drive.png";
 import HddPic from "../imgs/hard-disk.png";
 import SsdPic from "../imgs/ssd-drive.png";
-// import { FaSearch } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 function Favorites() {
   const favs = JSON.parse(localStorage.getItem("fav"));
   const { user } = useSelector((state) => state.auth);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/SignIn");
+    }
+  }, [user, navigate]);
   return (
     <>
       <h1 className="p-20">Hello {user && user.name}, you're favorites are here!</h1>
