@@ -2,75 +2,80 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
-const { MongoClient } = require("mongodb");
-const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri);
+const userModel = require("../models/userModel");
 
 const registerUser = asyncHandler(async (req, res, next) => {
-  // using User model and collection
-  await client.connect();
 
-  const db = client.db("pcDatabase");
+  try {
 
-  const { name, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-  // hash password
-  const salt = await bcrypt.genSalt(15);
-  const hashedPassword = await bcrypt.hash(password, salt);
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        error: 'Please enter all fields'
+      });
+    }
 
-  if(!name || !email || !password) {
-    return res.status(400).json({
-      success: false,
-      error: 'Please enter all fields'
+    // hash password
+    const salt = await bcrypt.genSalt(15);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = await userModel.findOne({ email });
+
+    if (user) {
+      return res.status(400).json({
+        success: false,
+        error: 'User already exists'
+      });
+    }
+
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword
     });
-  }
-  
-const result = await collection(User).findOne({ email });
-  if (result) {
-    return res.status(400).json({
-      success: false,
-      error: "User already exists",
-    });
-  }
 
+    const savedUser = await newUser.save();
 
-  function collection() {
-    return db.collection("user");
-  }
-
-  const newUser = await collection(User).insertOne({
-    name,
-    email,
-    password: hashedPassword,
-  });
-  if (newUser) {
     res.status(201).json({
       success: true,
-      id: newUser.insertedId,
-      name,
-      email,
-      token: generateToken(newUser.insertedId),
+      data: savedUser,
     });
-  } else {
-    res.status(400);
-    throw new Error("Error creating user");
+
+  } catch (error) {
+
+    console.log("error in registerUser", error);
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+
   }
-  // check if user exists
-  
-  
+
 });
 
 
 
 const getAllUsers = asyncHandler(async (req, res, next) => {
-  await client.connect();
-  const db = client.db("pcDatabase");
-  const collection = db.collection("user");
-  const users = await collection.find({}).toArray();
-  res.status(200).json({
-    success: true,
-    data: users,
-  });
+  try {
+
+    const findAllUsers = await userModel.find();
+
+
+    res.status(200).json({
+      success: true,
+      data: findAllUsers,
+    });
+
+  } catch (error) {
+    console.log("error in getAllUsers", error);
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
 });
 
 
@@ -78,45 +83,77 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
 // @des : Auth a user
 // @route : POST /api/users/login
 // @access : public
-
 const loginUser = asyncHandler(async (req, res) => {
-  await client.connect();
-  const db = client.db("pcDatabase");
-  const collection = db.collection("user");
-  const { email, password } = req.body;
-  // check if user eemail
-  const user = await collection.findOne({ email });
-  if (user && (await bcrypt.compare(password, user.password))) {
-    res.json({
-      success: true,
-      id: user.insertedId,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user.insertedId),
-    });
-  } else {
+
+  try {
+
+    const { email, password } = req.body;
+
+    const user = await userModel.findOne({ email });
+
+    if(!user) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid credentials",
+      });
+    }
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      
+      res.json({
+        success: true,
+        id: user.insertedId,
+        name: user.firstName + " " + user.lastName,
+        email: user.email,
+        token: generateToken(user.insertedId),
+      });
+
+    } else {
+      res.status(400).json({
+        success: false,
+        error: "Invalid credentials",
+      });
+    }
+    
+  } catch (error) {
+    console.log(" error in loginUser", error);
     res.status(400).json({
       success: false,
-      error: "Invalid credentials",
+      error: error.message,
     });
   }
+
 });
 
 // @des : get user
 // @route : GET /api/users/me
 // @access : private
 const getMe = asyncHandler(async (req, res) => {
-  await client.connect();
-  const db = client.db("pcDatabase");
-  const collection = db.collection("user");
-  const { _id, name, email } = await collection.findOne(req.user.id);
-  console.log(_id, name, email);
-  res.status(200).json({
-    success: true,
-    id: _id,
-    name,
-    email,
-  });
+  
+  try {
+
+    const user = await userModel.findById(req.user._id).select("-password");
+
+    if(!user) {
+      return res.status(400).json({
+        success: false,
+        error: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+
+  } catch (error) {
+    console.log("error in getMe", error);
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+  
 });
 
 // @des : generate JWT token

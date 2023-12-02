@@ -197,6 +197,26 @@ const deleteGpu = asyncHandler(async (req, res) => {
   }
 });
 
+// search trough all parts 
+// @desc search trough all parts
+// @route GET /api/gpus/search/:search
+// @access Private
+
+const searchParts = asyncHandler(async (req, res) => {
+  try {
+    const search = req.params.search;
+    await client.connect();
+    const db = client.db("pcDatabase");
+    const collection = db.collection("gpu");
+    // grabs the ID
+    const result = await collection.find({ name: { $regex: search, $options: 'i' } }).toArray();
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
+}
+);
+
 module.exports = {
   getGpus,
   createGpu,
