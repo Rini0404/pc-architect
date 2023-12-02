@@ -1,34 +1,28 @@
 const mongoose = require('mongoose');
 
-const partSchema = mongoose.Schema({
+const baseSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: [true, 'User is required']
   },
-  type: {
-    type: String,
-    // required: true,
-  },
-  brand: {
-    type: String,
-    // required: true,
-  },
-  model: {
-    type: String,
-    // required: true,
-  },
-  rank: {
-    type: String,
-    // required: true,
-  },
-  benchmark: {
-    type: String,
-    // required: true,
-  },
-  url: {
-    type: String,
-  },
-}, { timestamps: true });
+  Type: String,
+  Brand: String,
+  Model: String,
+  Rank: Number,
+  Benchmark: Number,
+  Samples: Number,
+  URL: String
+});
 
-module.exports = mongoose.model('Part', partSchema);
+function createModelForCollection(collectionName) {
+  return mongoose.model(collectionName, baseSchema, collectionName);
+}
+
+const Cpu = createModelForCollection('cpu');
+const Gpu = createModelForCollection('gpu');
+const Hdd = createModelForCollection('hdd');
+const Ram = createModelForCollection('ram');
+const Ssd = createModelForCollection('ssd');
+const Usb = createModelForCollection('usb');
+
+module.exports = { Cpu, Gpu, Hdd, Ram, Ssd, Usb };
