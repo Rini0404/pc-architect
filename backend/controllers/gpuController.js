@@ -197,25 +197,60 @@ const deleteGpu = asyncHandler(async (req, res) => {
   }
 });
 
-// search trough all parts 
-// @desc search trough all parts
-// @route GET /api/gpus/search/:search
-// @access Private
 
-const searchParts = asyncHandler(async (req, res) => {
+/**
+ * @desc get by part type, and by keyword
+ * @route GET /api/gpus/:type
+ * @access Private
+ */
+
+const models = {
+  cpu: Part.Cpu,
+  gpu: Part.Gpu,
+  hdd: Part.Hdd,
+  ram: Part.Ram,
+  ssd: Part.Ssd,
+  usb: Part.Usb
+};
+
+
+
+const getPartByTypeAndKey = asyncHandler(async (req, res) => {
   try {
-    const search = req.params.search;
-    await client.connect();
-    const db = client.db("pcDatabase");
-    const collection = db.collection("gpu");
-    // grabs the ID
-    const result = await collection.find({ name: { $regex: search, $options: 'i' } }).toArray();
-    res.send(result);
+    const { type, keyword } = req.params;
+
+    const PartModel = models[type.toLowerCase()];
+    if (!PartModel) {
+      return res.status(400).json({ error: 'Invalid part type specified.' });
+    }
+
+    const regex = new RegExp(keyword, 'i');
+
+    const parts = await PartModel.find({
+      $or: [
+        { Model: regex },
+      ],
+    })
+
+    if(parts.length === 0) {
+      return res.status(404).json({ error: 'No parts found. For: ' + keyword });
+    }
+    
+    res.json({
+      success: true,
+      parts,
+    })
+
+    console.log('parts.length:', parts.length)
+
   } catch (err) {
-    console.log(err);
+    console.error('Error fetching parts:', err);
+    res.status(500).json({ error: 'An error occurred while fetching parts.' });
   }
-}
-);
+});
+
+
+
 
 module.exports = {
   getGpus,
@@ -228,4 +263,5 @@ module.exports = {
   getSsds,
   getUsb,
   getHdd,
+  getPartByTypeAndKey,
 };

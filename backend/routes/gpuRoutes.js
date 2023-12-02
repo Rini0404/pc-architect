@@ -11,7 +11,7 @@ const {
   getSsds,
   getUsb,
   getHdd,
-
+  getPartByTypeAndKey,
 } = require("../controllers/gpuController");
 
 // const { protect } = require("../middleware/authMiddleware.js");
@@ -33,5 +33,8 @@ router
   .put( updateGpu)
   .delete( deleteGpu)
   .get( getGpusById);
+
+router.get('/parts/:type/:keyword', getPartByTypeAndKey);
+
 
 module.exports = router;
