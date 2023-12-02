@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 function Welcome() {
   const { user } = useSelector((state) => state.auth);
-
+  console.log(user)
   return (
     <>
       <div className="w-11/12 sm:w-2/3 mb-5 sm:mb-10">
