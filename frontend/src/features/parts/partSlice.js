@@ -7,6 +7,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: '',
+  searchPerformed: false,
 };
 
 // creat new Part
@@ -88,18 +89,17 @@ export const partSlice = createSlice({
     builder
     .addCase(getPartByKeyAndType.pending, (state) => {
       state.isLoading = true;
-    }
-    )
+      state.searchPerformed = true; // Set when search starts
+    })
     .addCase(getPartByKeyAndType.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.isSuccess = true;
       state.parts = action.payload;
     })
     .addCase(getPartByKeyAndType.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
-    })
+    });
   },
 });
 

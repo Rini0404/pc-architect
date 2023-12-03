@@ -98,30 +98,29 @@ const models = {
 const getPartByTypeAndKey = asyncHandler(async (req, res) => {
   try {
     const { type, keyword } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
 
+    // Use type directly as a key
     const PartModel = models[type.toLowerCase()];
     if (!PartModel) {
       return res.status(400).json({ error: 'Invalid part type specified.' });
     }
+    console.log('Type: ', type);
 
-    const regex = new RegExp(keyword, 'i');
-
-    const parts = await PartModel.find({
-      $or: [
-        { Model: regex },
-      ],
-    })
-
-    if(parts.length === 0) {
-      return res.status(404).json({ error: 'No parts found. For: ' + keyword });
+    let query = {};
+    if (keyword !== 'GET_ALL') {
+      const regex = new RegExp(keyword, 'i');
+      query = { Model: regex };
     }
-    
+
+    const result = await paginate(PartModel, query, page, limit);
+
     res.json({
       success: true,
-      parts,
-    })
-
-    console.log('parts.length:', parts.length)
+      parts: result.data,
+      ...result
+    });
 
   } catch (err) {
     console.error('Error fetching parts:', err);
@@ -129,6 +128,19 @@ const getPartByTypeAndKey = asyncHandler(async (req, res) => {
   }
 });
 
+
+async function paginate(model, query, page = 1, limit = 10) {
+  const skip = (page - 1) * limit;
+  const data = await model.find(query).skip(skip).limit(limit);
+  const total = await model.countDocuments(query);
+
+  return {
+    data,
+    currentPage: page,
+    totalPages: Math.ceil(total / limit),
+    totalItems: total
+  };
+}
 
 
 

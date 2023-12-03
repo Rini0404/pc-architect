@@ -35,9 +35,8 @@ const searchByTypeAndKeyService = async (type, keyword, token) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log('type', type)
-    console.log('keyword', keyword)
     const response = await axios.get(`${API_URL}${type}/${keyword}`, config);
+
     return response.data.parts;
 
   } catch (error) {

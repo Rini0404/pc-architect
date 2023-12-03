@@ -7,23 +7,37 @@ import Dropdown from "../components/Dropdown";
 import { toast } from "react-toastify";
 import { getPartByKeyAndType, resetPart } from "../features/parts/partSlice";
 import PartFound from "../components/PartFound";
+import { SEARCH_TYPE } from "../constants";
 
 function Search() {
+  const resultsRef = React.useRef(null);
+
   const dispatch = useDispatch();
 
-  const { isLoading } = useSelector((state) => state.auth);
-
   const partsFound = useSelector((state) => state?.parts?.parts);
+  
+  const { isLoading, searchPerformed } = useSelector((state) => state.parts);
 
-  console.log("partsFound", partsFound);
+  useEffect(() => {
+    if (!isLoading && searchPerformed) {
+      if (partsFound.length === 0) {
+        toast.error("No parts found!");
+      } else {
+        scrollToResults();
+      }
+    }
+  }, [partsFound, isLoading, searchPerformed]);
+
 
   const [selectedType, setSelectedType] = useState(null);
 
   const [selectedName, setSelectedName] = useState(null);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  const scrollToResults = () => {
+    if (resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const notifyError = () => toast.error("Please select a type!");
 
@@ -39,12 +53,15 @@ function Search() {
 
     e.preventDefault();
 
+    const ifSelectedName = selectedName ? selectedName : SEARCH_TYPE.GET_ALL;
+
     const part = {
       type: selectedType.toLowerCase(),
-      model: encodeURIComponent(selectedName.toLowerCase()),
+      model: encodeURIComponent(ifSelectedName === SEARCH_TYPE.GET_ALL ? SEARCH_TYPE.GET_ALL : selectedName.toLowerCase()),
     };
 
     dispatch(getPartByKeyAndType(part));
+
   };
 
   return (
@@ -80,9 +97,16 @@ function Search() {
               Search
             </button>
           </div>
+            <p className="text-xs text-gray-500 mt-2">
+              If you want to search all models, leave the models field empty.
+            </p>
         </div>
       </div>
-      {partsFound.length !== 0 && <PartFound partsFound={partsFound} />}
+      {partsFound.length !== 0 && (
+        <div ref={resultsRef}>
+          <PartFound partsFound={partsFound} />
+        </div>
+      )}
     </>
   );
 }
