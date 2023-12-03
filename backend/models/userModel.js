@@ -17,7 +17,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, 'Password is required']
     },
-
+    savedParts: [{
+        type: { type: String, enum: ['cpu', 'gpu', 'hdd', 'ram', 'ssd', 'usb'] },
+        partId: { type: mongoose.Schema.Types.ObjectId, required: true }
+    }],
 },
 {
     timestamps: true

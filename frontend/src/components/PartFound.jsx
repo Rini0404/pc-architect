@@ -3,7 +3,7 @@ import React from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { parts } from "../constants";
 
-export default function PartFound({ partsFound }) {
+export default function PartFound({ partsFound, isFavAlready }) {
   const getImageForPart = (type) => {
     const part = parts.find((p) => p.name === type);
     return part ? part.png : null; // Return the image or null if not found
@@ -42,12 +42,14 @@ export default function PartFound({ partsFound }) {
               </p>
               {/* add button to the bottom right of card  */}
               <div className="flex justify-end">
-                <button
-                  className="bg-indigo-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                  // onClick={() => handleAddFav(item)}
-                >
-                  <AiFillHeart />
-                </button>
+                {!isFavAlready && (
+                  <button
+                    className="bg-indigo-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    // onClick={() => handleAddFav(item)}
+                  >
+                    <AiFillHeart />
+                  </button>
+                )}
               </div>
             </div>
           </div>

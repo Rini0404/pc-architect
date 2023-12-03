@@ -3,6 +3,16 @@ const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const userModel = require("../models/userModel");
+const Part = require("../models/PartModels");
+
+const models = {
+  cpu: Part.Cpu,
+  gpu: Part.Gpu,
+  hdd: Part.Hdd,
+  ram: Part.Ram,
+  ssd: Part.Ssd,
+  usb: Part.Usb
+};
 
 const registerUser = asyncHandler(async (req, res, next) => {
 
@@ -56,8 +66,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
 });
 
-
-
 const getAllUsers = asyncHandler(async (req, res, next) => {
   try {
 
@@ -78,8 +86,6 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
   }
 });
 
-
-
 // @des : Auth a user
 // @route : POST /api/users/login
 // @access : public
@@ -99,13 +105,23 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
     if (user && (await bcrypt.compare(password, user.password))) {
+      const savedPartsData = await Promise.all(user.savedParts.map(async (savedPart) => {
+        if (savedPart && savedPart.type) {
+          const PartModel = models[savedPart.type]; // Update path accordingly
+          return await PartModel.findById(savedPart.partId);
+        }
+        return null;
+      }));
+
+      console.log('savedPartsData', savedPartsData)
       
       res.json({
         success: true,
-        id: user.insertedId,
+        id: user._id,
         name: user.firstName + " " + user.lastName,
         email: user.email,
-        token: generateToken(user.insertedId),
+        token: generateToken(user._id),
+        savedParts: savedPartsData.filter(part => part !== null), // This will now include full details of each part
       });
 
     } else {
@@ -163,9 +179,72 @@ const generateToken = (id) => {
   });
 };
 
+const savePartForUser = asyncHandler(async (req, res) => {
+  try {
+    const { partId, type } = req.body;
+    
+    // find user but not password
+
+    const user = await userModel.findById(req.user._id).select("-password");
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        error: "User not found",
+      });
+    }
+
+    if(!partId) {
+      return res.status(400).json({
+        success: false,
+        error: "Part not found",
+      });
+    }
+
+    if( user.savedParts.length === 0) {
+      user.savedParts.push({ partId, type});
+      await user.save();
+      return res.status(200).json({
+        success: true,
+        data: user
+      });
+    }
+
+    
+    // check if part already exists
+    const partExists = user.savedParts.find(part => part.partId.toString() === partId);
+
+    if(partExists) {
+      return res.status(400).json({
+        success: false,
+        error: "Part already saved",
+      });
+    }
+
+    user.savedParts.push({ partId, type });
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      data: user
+    });
+
+  } catch (error) {
+    console.log("error in savePartForUser", error);
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
+
+
 module.exports = {
   registerUser,
   loginUser,
   getMe,
   getAllUsers,
+  savePartForUser,
 };

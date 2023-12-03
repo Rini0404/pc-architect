@@ -12,10 +12,17 @@ const protect = asyncHandler(async (req, res, next) => {
       // get token fri=om header
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      await client.connect();
-      const db = client.db('pcDatabase');
-      const collection = db.collection('user')
-      req.user = await collection.findOne(decoded.id);
+
+      // get user from db
+      const user = await User.findById(decoded.id).select('-password');
+      
+      if(!user) {
+        res.status(404)
+        throw new Error('User not found')
+      }
+
+      req.user = user;
+
       next();
     } catch (err) {
       console.log(err);

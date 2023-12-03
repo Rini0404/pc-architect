@@ -44,8 +44,24 @@ const searchByTypeAndKeyService = async (type, keyword, token) => {
   }
 }
 
+const savePart = async (partData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  if (partData.id) {
+    // Assuming partData.id exists for existing parts
+    const response = await axios.put(`${API_URL}${partData.id}`, partData, config);
+    return response.data;
+  } 
+};
+
+
 
 const partService = {
+  savePart,
   createPart,
   getParts,
   searchByTypeAndKeyService,
