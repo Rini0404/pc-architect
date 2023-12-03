@@ -46,6 +46,37 @@ export const getParts = createAsyncThunk('parts/getParts', async(_, thunkAPI) =>
 
 });
 
+export const getPartByKeyAndType = createAsyncThunk('parts/getPartByKeyAndType', async({type, model}, thunkAPI) => {
+  try {
+    // get token
+    const token = thunkAPI.getState().auth.user.token;
+    return await partService.searchByTypeAndKeyService(type, model, token);
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.response.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+
+})
+
+export const resetPart = createAsyncThunk('parts/resetPart', async(_, thunkAPI) => {
+  try {
+    return await partService.resetPart();
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.response.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+
+})
 
 export const partSlice = createSlice({
   name: "part",
@@ -55,31 +86,19 @@ export const partSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(createPart.pending, (state) => {
-      state.isLoading = true
+    .addCase(getPartByKeyAndType.pending, (state) => {
+      state.isLoading = true;
+    }
+    )
+    .addCase(getPartByKeyAndType.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.parts = action.payload;
     })
-    .addCase(createPart.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.isSuccess = true
-      state.goals.push(action.payload)
-    })
-    .addCase(createPart.rejected, (state, action) => {
-      state.isLoading = false
-      state.isError = true
-      state.message = action.payload
-    })
-    .addCase(getParts.pending, (state) => {
-      state.isLoading = true
-    })
-    .addCase(getParts.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.isSuccess = true
-      state.goals = action.payload
-    })
-    .addCase(getParts.rejected, (state, action) => {
-      state.isLoading = false
-      state.isError = true
-      state.message = action.payload
+    .addCase(getPartByKeyAndType.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
     })
   },
 });

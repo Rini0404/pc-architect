@@ -28,9 +28,29 @@ const getParts = async (token) => {
 };
 
 
+const searchByTypeAndKeyService = async (type, keyword, token) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log('type', type)
+    console.log('keyword', keyword)
+    const response = await axios.get(`${API_URL}${type}/${keyword}`, config);
+    console.log('response.data', response.data)
+    return response.data;
+
+  } catch (error) {
+    console.log('error in searchByTypeAndKey Service', error)
+  }
+}
+
+
 const partService = {
   createPart,
   getParts,
+  searchByTypeAndKeyService,
 };
 
 export default partService;
