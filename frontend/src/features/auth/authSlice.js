@@ -53,6 +53,31 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
 });
 
+export const savePart = createAsyncThunk('parts/savePart', async (partData, thunkAPI) => {
+  try {
+    // get token
+    const user = localStorage.getItem('user');
+
+    // de-stringify user 
+    const parsedUser = JSON.parse(user);
+
+    if (!parsedUser.token) {
+      console.log('No token found');
+      return thunkAPI.rejectWithValue('Authentication token not found');
+    }
+    
+    const response = await authService.savePart(partData, parsedUser.token);
+    
+    return response.data;
+
+  } catch (error) {
+    const message = error?.error || error?.message || error.toString();
+    console.log('error in savePart', message);
+    return thunkAPI.rejectWithValue(message);
+  }
+
+})
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -98,6 +123,22 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.user = null;
+      })
+      .addCase(savePart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(savePart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        // potential issue: this will overwrite the user object
+        // state.user = action.payload;
+        state.message = 'Part saved successfully';
+      })
+      .addCase(savePart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
         state.user = null;
       })
   },

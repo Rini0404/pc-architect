@@ -5,8 +5,6 @@ import PartFound from "../components/PartFound";
 function Favorites() {
   const { user } = useSelector((state) => state.auth);
 
-  console.log("user", user.savedParts);
-
   return (
     <>
       <h1 className="p-20">

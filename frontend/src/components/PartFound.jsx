@@ -2,11 +2,49 @@ import React from "react";
 
 import { AiFillHeart } from "react-icons/ai";
 import { parts } from "../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { reset, savePart } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 export default function PartFound({ partsFound, isFavAlready }) {
+
+  const { message, isSuccess} = useSelector(state => state.auth);
+
   const getImageForPart = (type) => {
     const part = parts.find((p) => p.name === type);
     return part ? part.png : null; // Return the image or null if not found
+  };
+
+  const errorToast = () => toast.error(message);
+
+  React.useEffect(() => {
+    if (message && !isSuccess) {
+      errorToast();
+      dispatch(reset());
+    } else if (message && isSuccess) {
+      toast.success(message);
+      dispatch(reset());
+    
+    }
+  }
+  , [message]);
+
+
+
+
+  const dispatch = useDispatch();
+
+  const handleAddFav = (id, type) => {
+    console.log("handleAddFav: ", id)
+    try {
+      const part = {
+        partId: id,
+        type: type.toLowerCase(),
+      }
+      dispatch(savePart(part));
+    } catch (error) {
+      console.log("error in handleAddFav: ", error);
+    }
   };
 
   return (
@@ -45,7 +83,7 @@ export default function PartFound({ partsFound, isFavAlready }) {
                 {!isFavAlready && (
                   <button
                     className="bg-indigo-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    // onClick={() => handleAddFav(item)}
+                    onClick={() => handleAddFav(item._id, item.Type)}
                   >
                     <AiFillHeart />
                   </button>
