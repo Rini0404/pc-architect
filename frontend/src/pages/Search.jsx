@@ -100,6 +100,9 @@ function Search() {
             <p className="text-xs text-gray-500 mt-2">
               If you want to search all models, leave the models field empty.
             </p>
+            <p className="text-xs text-gray-500 mt-2">
+              Click on any card to view its preformance data and click on the heart to save it to your favorites.
+              </p>
         </div>
       </div>
       {partsFound.length !== 0 && (

@@ -1,3 +1,8 @@
 * {
   /* background-color: black; */
 }
+
+
+.cardClickable {
+  cursor: pointer;
+}

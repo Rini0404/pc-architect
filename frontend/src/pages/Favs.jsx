@@ -7,17 +7,21 @@ function Favorites() {
 
   return (
     <>
-      <h1 className="p-20">
-        Hello {user && user.name}, you're favorites are here!
-      </h1> <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 bg-gray-100 overflow-x-auto max-w-full">
         {user.savedParts.length > 0 ? (
             <PartFound 
               isFavAlready={true}
             partsFound={user.savedParts} />
         ) : (
-          <h1 className="p-20">You have no favorites yet!</h1>
+          
+          <div className="flex flex-col items-center justify-center h-screen">
+            <h1 className="text-2xl font-semibold text-gray-800 ">
+              No favorites yet!
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2 mb-4 text-center w-80">
+              Save your favorite parts by clicking on the heart icon to see them here.
+            </p>
+          </div>
         )}
-      </div>
     </>
   );
 }

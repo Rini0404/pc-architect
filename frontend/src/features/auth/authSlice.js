@@ -78,6 +78,23 @@ export const savePart = createAsyncThunk('parts/savePart', async (partData, thun
 
 })
 
+export const saveUserOnLoad = createAsyncThunk(
+  "auth/saveUserOnLoad",
+  async (_, thunkAPI) => {
+    try {
+      const user = localStorage.getItem("user");
+      if (user) {
+        return JSON.parse(user);
+      }
+      return null;
+    } catch (error) {
+      const message = error?.error || error?.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,

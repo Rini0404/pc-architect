@@ -4,15 +4,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 
 export default function IndexPage() {
+  const [navOpen, setNavOpen] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
+  const closeNavbar = () => {
+    setNavOpen(false); // Function to close the navbar
+  };
 
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
     navigate("/");
+    closeNavbar();
   };
+
   return (
     <div className="relative w-full">
       <header>
@@ -23,21 +31,23 @@ export default function IndexPage() {
           className="hbr peer"
           hidden
           aria-hidden="true"
+          onChange={() => setNavOpen(!navOpen)}
         />
-        <nav className="fixed z-10 w-full border-b bg-white bg-opacity-70 backdrop-blur navbar peer-checked:navbar-active md:absolute md:bg-transparent">
+        <nav
+          className={`fixed z-10 w-full border-b bg-white bg-opacity-70 backdrop-blur navbar ${
+            navOpen ? "navbar-active" : ""
+          } md:absolute md:bg-transparent`}
+        >
           <div className="container m-auto px-2 md:px-12 lg:px-7">
             <div className="flex flex-wrap items-center justify-between gap-6 md:py-3 md:gap-0">
               <div className="w-full px-6 flex justify-between lg:w-max md:px-0">
-                <Link to="/">
+                <Link to="/" onClick={closeNavbar}>
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <a
                     href="#"
                     aria-label="logo"
-                    className="flex space-x-2 items-center"
+                    className="flex items-center py-2 px-2 text-gray-700 hover:text-gray-900 text-2xl font-bold lg:text-3xl"
                   >
-                    <div aria-hidden="true" className="flex space-x-1">
-                      <div className="h-4 w-4 rounded-full bg-gray-900"></div>
-                      <div className="h-6 w-2 bg-sky-500"></div>
-                    </div>
                     <span className="text-base font-bold text-gray-400">
                       Pc Architect
                     </span>
@@ -61,7 +71,7 @@ export default function IndexPage() {
               <div className="navmenu hidden w-full flex-wrap justify-end items-center mb-16 mx-6 space-y-20 p-6 rounded-xl shadow-lg bg-white lg:space-y-0 lg:p-0 lg:m-0 lg:flex md:flex-nowrap lg:bg-transparent lg:w-7/12 lg:shadow-none">
                 <div className="text-gray-600 lg:pr-4 ">
                   <ul className=" tracking-wide font-medium text-lg lg:text-sm lg:flex lg:space-y-0">
-                    <Link to="/">
+                    <Link onClick={closeNavbar} to="/">
                       <li>
                         <a
                           href="#"
@@ -72,7 +82,7 @@ export default function IndexPage() {
                       </li>
                     </Link>
 
-                    <Link to="search">
+                    <Link onClick={closeNavbar} to="search">
                       <li>
                         <a
                           href="#"
@@ -83,16 +93,19 @@ export default function IndexPage() {
                       </li>
                     </Link>
 
-                    <Link to="/Favs">
-                      <li>
-                        <a
-                          href="#"
-                          className="block md:px-4 transition hover:text-sky-700"
-                        >
-                          <span>Favorites</span>
-                        </a>
-                      </li>
-                    </Link>
+                    {user && (
+                      <Link onClick={closeNavbar} to="/Favs">
+                        <li>
+                          <a
+                            href="#"
+                            className="block md:px-4 transition hover:text-sky-700"
+                          >
+                            <span>Favorites</span>
+                          </a>
+                        </li>
+                      </Link>
+                    )}
+
                     <li>
                       <a
                         target="_blank"
@@ -119,7 +132,7 @@ export default function IndexPage() {
                     </button>
                   ) : (
                     <>
-                      <Link to="/SignUp">
+                      <Link onClick={closeNavbar} to="/SignUp">
                         <button
                           type="button"
                           title="Start buying"
@@ -130,7 +143,7 @@ export default function IndexPage() {
                           </span>
                         </button>
                       </Link>
-                      <Link to="/SignIn">
+                      <Link onClick={closeNavbar} to="/SignIn">
                         <button
                           type="button"
                           title="Start buying"
