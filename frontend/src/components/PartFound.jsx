@@ -5,9 +5,12 @@ import { parts } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { reset, savePart } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
+import authService from "../features/auth/authService";
 
 export default function PartFound({ partsFound, isFavAlready }) {
   const { user } = useSelector((state) => state.auth);
+
+
   // Use user.savedParts to check if the part is already saved
 
   const { message, isSuccess } = useSelector((state) => state.auth);
@@ -35,15 +38,17 @@ export default function PartFound({ partsFound, isFavAlready }) {
 
   const dispatch = useDispatch();
 
-  const handleAddFav = (event, id, type) => {
+  const handleAddFav = (event, item) => {
     event.stopPropagation();
 
     try {
       const part = {
-        partId: id,
-        type: type.toLowerCase(),
+        partId: item._id,
+        type: item.Type.toLowerCase(),
       };
       dispatch(savePart(part));
+      dispatch(authService.addPartToFavorites(item));
+
     } catch (error) {
       console.log("error in handleAddFav: ", error);
     }
@@ -110,15 +115,15 @@ export default function PartFound({ partsFound, isFavAlready }) {
               <div className="flex justify-end">
                 {!isPartSaved(item._id) && !isFavAlready ? (
                   <button
-                    className="bg-indigo-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-10"
-                    onClick={(e) => handleAddFav(e, item._id, item.Type)}
+                    className="bg-indigo-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={(e) => handleAddFav(e, item)}
                   >
                     <AiFillHeart />
                   </button>
                 ) : (
                   // remove button to the bottom right of card
                   <button
-                    className="bg-red-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-10"
+                    className="bg-red-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     onClick={(e) => handleDeleteFav(e, item._id)}
                   >
                     <AiFillDelete />

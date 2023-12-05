@@ -6,7 +6,7 @@ import SignUp from "./SignUp";
 import Landing from "./Home";
 import Favs from "./Favs";
 import Search from "./Search";
-import { saveUserOnLoad } from "../features/auth/authSlice";
+import { getMe } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 
 function Pages() {
@@ -18,13 +18,19 @@ function Pages() {
 
   React.useEffect(() => {
     const token = localStorage.getItem("user");
-    setIsUserLoggedIn(!!token);
 
-    if (token) {
-      dispatch(saveUserOnLoad());
+    const user = JSON.parse(token); 
+
+
+    setIsUserLoggedIn(!!user);
+    
+    if (user?.token) {
+      dispatch(getMe(user.token))
     }
 
-  }, [dispatch]);
+    console.log("Hook ran for sesh")
+
+  }, []);
 
   return (
     <Routes location={location} key={location.pathname}>

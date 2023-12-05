@@ -7,7 +7,6 @@ function Home() {
   React.useEffect(() => {
     axios.get("/api/gpus").then((res) => {
       setGpu(res.data);
-      console.log(res.data);
     });
   }, []);
 

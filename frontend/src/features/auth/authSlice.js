@@ -67,8 +67,7 @@ export const savePart = createAsyncThunk('parts/savePart', async (partData, thun
     }
     
     const response = await authService.savePart(partData, parsedUser.token);
-    
-    return response.data;
+    return response.data; 
 
   } catch (error) {
     const message = error?.error || error?.message || error.toString();
@@ -77,6 +76,19 @@ export const savePart = createAsyncThunk('parts/savePart', async (partData, thun
   }
 
 })
+
+
+export const getMe = createAsyncThunk('auth/getMe', async (token, thunkAPI) => {
+  try {
+    const response = await authService.getMe(token);
+    console.log('response in getMe', response)
+    return response;
+  } catch (error) {
+    const message = error?.error || error?.message || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+})
+
 
 export const saveUserOnLoad = createAsyncThunk(
   "auth/saveUserOnLoad",
@@ -94,7 +106,6 @@ export const saveUserOnLoad = createAsyncThunk(
   }
 );
 
-
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -104,6 +115,9 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isLoading = false;
       state.message = "";
+    },
+    setUserParts: (state, action) => {
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -148,8 +162,6 @@ export const authSlice = createSlice({
       .addCase(savePart.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // potential issue: this will overwrite the user object
-        // state.user = action.payload;
         state.message = 'Part saved successfully';
       })
       .addCase(savePart.rejected, (state, action) => {
@@ -158,9 +170,21 @@ export const authSlice = createSlice({
         state.message = action.payload;
         state.user = null;
       })
-  },
+      .addCase(getMe.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getMe.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(getMe.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+    },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, setUserParts } = authSlice.actions;
 
 export default authSlice.reducer;

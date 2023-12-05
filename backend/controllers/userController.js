@@ -157,6 +157,22 @@ const getMe = asyncHandler(async (req, res) => {
       });
     }
 
+    const savedPartsData = await Promise.all(user.savedParts.map(async (savedPart) => {
+      if (savedPart && savedPart.type) {
+        const PartModel = models[savedPart.type]; // Update path accordingly
+        return await PartModel.findById(savedPart.partId);
+      }
+      return null;
+    }));
+
+    res.json({
+      id: user._id,
+      name: user.firstName + " " + user.lastName,
+      email: user.email,
+      token: generateToken(user._id),
+      savedParts: savedPartsData.filter(part => part !== null), 
+    });
+
     res.status(200).json({
       success: true,
       data: user,

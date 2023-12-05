@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setUserParts } from './authSlice';
 
 const API_URL = '/api/users/';
 
@@ -44,7 +45,6 @@ const login = async (userData) => {
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data))
   }
-
   return response.data
 }
 
@@ -54,13 +54,38 @@ const logout = async () => {
 }
 
 
+const addPartToFavorites = (part) => (dispatch, getState) => {
+  const { user } = getState().auth;
+  if (user) {
+    const updatedUser = {
+      ...user,
+      savedParts: [...user.savedParts, part],
+    };
+    dispatch(setUserParts(updatedUser)); // Now this is a valid function
+  }
+};
 
+const getMe = async (token) => {
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + 'me', config);
+
+  return response.data;
+
+}
 
 const authService = {
   register,
   logout,
   login,
   savePart,
+  getMe,
+  addPartToFavorites
 }
 
 export default authService;

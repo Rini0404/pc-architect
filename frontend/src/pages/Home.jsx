@@ -7,13 +7,6 @@ import Welcome from "../components/Welcome";
 import Gallery from "../components/Gallery";
 
 function IndexPage() {
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (!user) {
-      navigate("/SignIn");
-    }
-  }, [user, navigate]);
 
   return (
     <>
