@@ -108,7 +108,7 @@ export default function PartFound({ partsFound, isFavAlready }) {
               </p>
               {/* add button to the bottom right of card  */}
               <div className="flex justify-end">
-                {!isPartSaved(item._id) && isFavAlready ? (
+                {!isPartSaved(item._id) && !isFavAlready ? (
                   <button
                     className="bg-indigo-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-10"
                     onClick={(e) => handleAddFav(e, item._id, item.Type)}
