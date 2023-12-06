@@ -6,6 +6,7 @@ const {
   getMe,
   getAllUsers,
   savePartForUser,
+  removePartForUser,
 } = require("../controllers/userController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -15,5 +16,6 @@ router.post("/login", loginUser);
 router.get("/me", protect, getMe)
 router.get("/all", getAllUsers);
 router.post("/savePart", protect, savePartForUser)
+router.put("/removePart", protect, removePartForUser)
 
 module.exports = router;

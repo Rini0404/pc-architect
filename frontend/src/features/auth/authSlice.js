@@ -106,6 +106,38 @@ export const saveUserOnLoad = createAsyncThunk(
   }
 );
 
+export const removeSavedPart = createAsyncThunk(
+  "auth/removeSavedPart",
+  async (partId, thunkAPI) => {
+    try {
+      const user = localStorage.getItem("user");
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        if (!parsedUser.token) {
+          console.log("No token found");
+          return thunkAPI.rejectWithValue("Authentication token not found");
+        }
+
+        const response = await authService.removeSavedPart(partId, parsedUser.token);
+        console.log('response in removeSavedPart', response);
+
+        // Remove the part from savedParts in local storage
+        if (response.success) {
+          const updatedSavedParts = parsedUser.savedParts.filter(part => part._id !== partId);
+          const updatedUser = { ...parsedUser, savedParts: updatedSavedParts };
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+        }
+
+        return response.data;
+      }
+      return null;
+    } catch (error) {
+      const message = error?.error || error?.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -122,6 +154,20 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(removeSavedPart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(removeSavedPart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = 'Part removed successfully';
+      })
+      .addCase(removeSavedPart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
       .addCase(register.pending, (state) => {
         state.isLoading = true;
       })

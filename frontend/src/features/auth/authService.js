@@ -65,6 +65,22 @@ const addPartToFavorites = (part) => (dispatch, getState) => {
   }
 };
 
+const removePartFromFavorites = (partId) => (dispatch, getState) => {
+  const { user } = getState().auth;
+  console.log("user", user)
+  console.log("partId", partId)
+  if (user) {
+    const updatedUser = {
+      ...user,
+      savedParts: user.savedParts.filter(part => part._id !== partId),
+    };
+    console.log("updatedUser", updatedUser)
+    dispatch(setUserParts(updatedUser));
+  }
+
+};
+
+
 const getMe = async (token) => {
 
   const config = {
@@ -79,13 +95,30 @@ const getMe = async (token) => {
 
 }
 
+const removeSavedPart = async (partId, token) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.put(API_URL + 'removePart', { partId }, config);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
 const authService = {
   register,
   logout,
   login,
   savePart,
   getMe,
-  addPartToFavorites
+  addPartToFavorites,
+  removeSavedPart,
+  removePartFromFavorites,
 }
 
 export default authService;

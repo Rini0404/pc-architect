@@ -255,6 +255,42 @@ const savePartForUser = asyncHandler(async (req, res) => {
   }
 });
 
+const removePartForUser = asyncHandler(async (req, res) => {
+  try {
+    const { partId } = req.body;
+
+    // Find user by ID and exclude password from the result
+    const user = await userModel.findById(req.user._id).select("-password");
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        error: "User not found",
+      });
+    }
+
+    // Filter out the part to be removed
+    user.savedParts = user.savedParts.filter(part => part.partId.toString() !== partId);
+
+    // Save the updated user
+    await user.save();
+    
+    res.status(200).json({
+      success: true,
+      message: "Part removed successfully",
+      data: user
+    });
+    
+  } catch (error) {
+    console.log("error in removePartForUser", error);
+    res.status(500).json({
+      success: false,
+      error: error.message || "An error occurred"
+    });
+  }
+});
+
+
 
 
 module.exports = {
@@ -263,4 +299,5 @@ module.exports = {
   getMe,
   getAllUsers,
   savePartForUser,
+  removePartForUser,
 };

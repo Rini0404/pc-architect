@@ -4,7 +4,7 @@ import PartFound from "../components/PartFound";
 
 function Favorites() {
   const { user } = useSelector((state) => state.auth);
-
+  
   return (
     <>
         {user.savedParts.length > 0 ? (
