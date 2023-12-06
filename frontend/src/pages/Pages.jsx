@@ -8,41 +8,30 @@ import Favs from "./Favs";
 import Search from "./Search";
 import { getMe } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { ProtectedElement } from "../components/Protection";
 
 function Pages() {
   const location = useLocation();
-  
-  const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
-  
+
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     const token = localStorage.getItem("user");
 
-    const user = JSON.parse(token); 
+    const user = JSON.parse(token);
 
-
-    setIsUserLoggedIn(!!user);
-    
     if (user?.token) {
-      dispatch(getMe(user.token))
+      dispatch(getMe(user.token));
     }
-
   }, []);
 
   return (
     <Routes location={location} key={location.pathname}>
-      {!isUserLoggedIn && (
-        <>
-          <Route path="/SignIn" element={<SignIn />} />
-          <Route path="/SignUp" element={<SignUp />} />
-        </>
-      )}
       <Route path="/SignIn" element={<SignIn />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/" element={<Home />} />
       <Route path="/Landing" element={<Landing />} />
-      <Route path="/Favs" element={<Favs />} />
+      <Route path="/Favs" element={<ProtectedElement><Favs /></ProtectedElement>} />
       <Route path="/Search" element={<Search />} />
     </Routes>
   );

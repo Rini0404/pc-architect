@@ -5,9 +5,9 @@ import Pic from "../imgs/pcPic1.jpg";
 import Heros from "../components/Heros";
 import Welcome from "../components/Welcome";
 import Gallery from "../components/Gallery";
+import { useAuth } from "../components/Protection";
 
 function IndexPage() {
-
   return (
     <>
       <div className="py-12 bg-yellow-50 overflow-y-hidden">
@@ -39,10 +39,16 @@ function IndexPage() {
                 </Link>
                 <Link to="/Favs">
                   <button className="hover:bg-white hover:text-indigo-600 lg:text-xl hover:border-indigo-600 ml-3 sm:ml-6 bg-transparent transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700 focus:ring-white hover:bg-indigo-700-800 rounded border border-white text-white px-4 sm:px-8 py-1 sm:py-3 text-sm">
-                    View Favorites
+                    View Your Favorites
                   </button>
                 </Link>
               </div>
+              {!useAuth() && (
+                <p className="text-white text-sm sm:text-base ml-3 sm:ml-6 mt-2 sm:mt-0">
+                  <span className="font-bold">Note:</span> You must be logged in
+                  to view your favorites!
+                </p>
+              )}
             </div>
             <div className="container mx-auto flex justify-center md:-mt-56 -mt-20 sm:-mt-40">
               <div className="relative sm:w-2/3 w-11/12">

@@ -5,6 +5,7 @@ import authService from "./authService";
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
+  isAuthenticated: false,
   user: user,
   isError: false,
   isSuccess: false,
@@ -189,6 +190,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
+        state.isAuthenticated = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -200,6 +202,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = null;
+        state.isAuthenticated = false;
       })
       .addCase(savePart.pending, (state) => {
         state.isLoading = true;
@@ -220,6 +223,9 @@ export const authSlice = createSlice({
       })
       .addCase(getMe.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isAuthenticated = true;
       })
       .addCase(getMe.rejected, (state, action) => {
         state.isLoading = false;
