@@ -26,6 +26,7 @@ function Search() {
         scrollToResults();
       }
     }
+    console.log("partsFound: ", partsFound)
   }, [partsFound, isLoading, searchPerformed]);
 
 
@@ -59,6 +60,8 @@ function Search() {
       type: selectedType.toLowerCase(),
       model: encodeURIComponent(ifSelectedName === SEARCH_TYPE.GET_ALL ? SEARCH_TYPE.GET_ALL : selectedName.toLowerCase()),
     };
+
+    console.log("part: ", part);
 
     dispatch(getPartByKeyAndType(part));
 

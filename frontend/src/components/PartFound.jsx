@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeSavedPart, reset, savePart } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
 import authService from "../features/auth/authService";
+import { useAuth } from "./Protection";
 
 export default function PartFound({
   partsFound: initialPartsFound,
@@ -13,7 +14,14 @@ export default function PartFound({
 }) {
   const [partsFound, setPartsFound] = React.useState(initialPartsFound);
 
-  const { user, message, isSuccess } = useSelector((state) => state.auth);
+  const { user, message, isSuccess, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
+
+  // Use useEffect to update local state when initialPartsFound changes
+  React.useEffect(() => {
+    setPartsFound(initialPartsFound);
+  }, [initialPartsFound]);
 
   const getImageForPart = (type) => {
     const part = parts.find((p) => p.name === type);
@@ -40,7 +48,8 @@ export default function PartFound({
 
   const handleAddFav = (event, item) => {
     event.stopPropagation();
-
+    if (!isAuthenticated)
+      return toast.error("Please sign in to favorite a part!");
     try {
       const part = {
         partId: item._id,
@@ -54,7 +63,7 @@ export default function PartFound({
   };
 
   const isPartSaved = (partId) => {
-    // Check if the partId is in user.savedParts
+    if (!isAuthenticated) return;
     return user.savedParts.some((part) => part._id === partId);
   };
 
@@ -70,7 +79,7 @@ export default function PartFound({
 
       dispatch(removeSavedPart(partId));
 
-      dispatch(authService.removePartFromFavorites(partId))
+      dispatch(authService.removePartFromFavorites(partId));
     } catch (error) {
       console.error("error in handleDeleteFav: ", error);
       toast.error("Failed to remove part");
@@ -78,6 +87,8 @@ export default function PartFound({
   };
 
   const doHaveParts = partsFound.length > 0;
+
+  console.log("PARTS FOUND UI COMPONENT: ", partsFound);
 
   return (
     <>

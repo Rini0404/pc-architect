@@ -50,9 +50,9 @@ export const getParts = createAsyncThunk('parts/getParts', async(_, thunkAPI) =>
 export const getPartByKeyAndType = createAsyncThunk('parts/getPartByKeyAndType', async({type, model}, thunkAPI) => {
   try {
     // get token
-    const token = thunkAPI.getState().auth.user.token;
-    return await partService.searchByTypeAndKeyService(type, model, token);
+    return await partService.searchByTypeAndKeyService(type, model);
   } catch (error) {
+    console.log('error in getPartByKeyAndType SLICE: ', error)
     const message =
       (error.response &&
         error.response.data &&

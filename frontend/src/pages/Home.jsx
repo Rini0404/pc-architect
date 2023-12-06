@@ -44,7 +44,7 @@ function IndexPage() {
                 </Link>
               </div>
               {!useAuth() && (
-                <p className="text-white text-sm sm:text-base ml-3 sm:ml-6 mt-2 sm:mt-0">
+                <p className="text-white text-sm sm:text-base ml-3 sm:ml-6 mt-2 sm:mt-0 pb-10 text-center">
                   <span className="font-bold">Note:</span> You must be logged in
                   to view your favorites!
                 </p>

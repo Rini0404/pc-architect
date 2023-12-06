@@ -30,13 +30,11 @@ const getParts = async (token) => {
 
 const searchByTypeAndKeyService = async (type, keyword, token) => {
   try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const response = await axios.get(`${API_URL}${type}/${keyword}`, config);
 
+    if(!type || !keyword) throw new Error('type and keyword required');
+
+    const response = await axios.get(`${API_URL}${type}/${keyword}`);
+    console.log('response in searchByTypeAndKey Service', response)
     return response.data.parts;
 
   } catch (error) {
