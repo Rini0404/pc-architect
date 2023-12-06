@@ -173,11 +173,6 @@ const getMe = asyncHandler(async (req, res) => {
       savedParts: savedPartsData.filter(part => part !== null), 
     });
 
-    res.status(200).json({
-      success: true,
-      data: user,
-    });
-
   } catch (error) {
     console.log("error in getMe", error);
     res.status(400).json({

@@ -28,8 +28,6 @@ function Pages() {
       dispatch(getMe(user.token))
     }
 
-    console.log("Hook ran for sesh")
-
   }, []);
 
   return (

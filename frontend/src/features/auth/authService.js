@@ -67,14 +67,11 @@ const addPartToFavorites = (part) => (dispatch, getState) => {
 
 const removePartFromFavorites = (partId) => (dispatch, getState) => {
   const { user } = getState().auth;
-  console.log("user", user)
-  console.log("partId", partId)
   if (user) {
     const updatedUser = {
       ...user,
       savedParts: user.savedParts.filter(part => part._id !== partId),
     };
-    console.log("updatedUser", updatedUser)
     dispatch(setUserParts(updatedUser));
   }
 

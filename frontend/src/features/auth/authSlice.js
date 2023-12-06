@@ -119,7 +119,6 @@ export const removeSavedPart = createAsyncThunk(
         }
 
         const response = await authService.removeSavedPart(partId, parsedUser.token);
-        console.log('response in removeSavedPart', response);
 
         // Remove the part from savedParts in local storage
         if (response.success) {
