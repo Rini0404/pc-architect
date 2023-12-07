@@ -34,7 +34,6 @@ const searchByTypeAndKeyService = async (type, keyword, token) => {
     if(!type || !keyword) throw new Error('type and keyword required');
 
     const response = await axios.get(`${API_URL}${type}/${keyword}`);
-    console.log('response in searchByTypeAndKey Service', response)
     return response.data.parts;
 
   } catch (error) {

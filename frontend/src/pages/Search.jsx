@@ -26,7 +26,6 @@ function Search() {
         scrollToResults();
       }
     }
-    console.log("partsFound: ", partsFound);
   }, [partsFound, isLoading, searchPerformed]);
 
   const [selectedType, setSelectedType] = useState(null);
@@ -64,7 +63,6 @@ function Search() {
       ),
     };
 
-    console.log("part: ", part);
 
     dispatch(getPartByKeyAndType(part));
   };

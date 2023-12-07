@@ -78,7 +78,6 @@ export const savePart = createAsyncThunk('parts/savePart', async (partData, thun
 export const getMe = createAsyncThunk('auth/getMe', async (token, thunkAPI) => {
   try {
     const response = await authService.getMe(token);
-    console.log('response in getMe', response)
     return response;
   } catch (error) {
     const message = error?.error || error?.message || error.toString();
@@ -176,7 +175,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
-        console.log('action.payload in register.rejected', action.payload)
         state.message = action.payload;
         state.user = null;
       })

@@ -58,11 +58,9 @@ function SignUp() {
     if (isSuccess) {
       setLoadingSubmit(false);
       navigate("/");
-      console.log(" IS SUCCESS");
     }
     if (isError) {
       setLoadingSubmit(false);
-      console.log(" IS ERROR");
       toast.error(message);
     }
     dispatch(reset());

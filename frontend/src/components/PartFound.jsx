@@ -87,8 +87,6 @@ export default function PartFound({
 
   const doHaveParts = partsFound.length > 0;
 
-  console.log("PARTS FOUND UI COMPONENT: ", partsFound);
-
   return (
     <>
       {doHaveParts ? (

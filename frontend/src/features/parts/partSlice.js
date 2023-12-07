@@ -52,7 +52,6 @@ export const getPartByKeyAndType = createAsyncThunk('parts/getPartByKeyAndType',
     // get token
     return await partService.searchByTypeAndKeyService(type, model);
   } catch (error) {
-    console.log('error in getPartByKeyAndType SLICE: ', error)
     const message =
       (error.response &&
         error.response.data &&

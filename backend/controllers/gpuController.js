@@ -106,7 +106,6 @@ const getPartByTypeAndKey = asyncHandler(async (req, res) => {
     if (!PartModel) {
       return res.status(400).json({ error: 'Invalid part type specified.' });
     }
-    console.log('Type: ', type);
 
     let query = {};
     if (keyword !== 'GET_ALL') {
