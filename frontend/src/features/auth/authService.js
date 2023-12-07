@@ -28,13 +28,24 @@ const savePart = async (partData, token) => {
 
 //  register user with
 const register = async (userData) => {
-  const response = await axios.post(API_URL, userData)
-
-  if (response.data) {
-    localStorage.setItem('user', JSON.stringify(response.data))
+  try {
+    const response = await axios.post(API_URL, userData)
+  
+    console.log("Register response: ", response)
+  
+    if (response.data) {
+      localStorage.setItem('user', JSON.stringify(response.data))
+    }
+  
+    return response.data
+  } catch (error) {
+    if (error.response && error.response.data) {
+      throw new Error(error.response.data.error || 'An error occurred');
+    } else {
+      // For network errors or other issues not related to the server response
+      throw new Error(error.message || 'An error occurred');
+    }
   }
-
-  return response.data
 }
 
 //  login user with

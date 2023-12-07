@@ -15,7 +15,7 @@ function Search() {
   const dispatch = useDispatch();
 
   const partsFound = useSelector((state) => state?.parts?.parts);
-  
+
   const { isLoading, searchPerformed } = useSelector((state) => state.parts);
 
   useEffect(() => {
@@ -26,9 +26,8 @@ function Search() {
         scrollToResults();
       }
     }
-    console.log("partsFound: ", partsFound)
+    console.log("partsFound: ", partsFound);
   }, [partsFound, isLoading, searchPerformed]);
-
 
   const [selectedType, setSelectedType] = useState(null);
 
@@ -58,13 +57,16 @@ function Search() {
 
     const part = {
       type: selectedType.toLowerCase(),
-      model: encodeURIComponent(ifSelectedName === SEARCH_TYPE.GET_ALL ? SEARCH_TYPE.GET_ALL : selectedName.toLowerCase()),
+      model: encodeURIComponent(
+        ifSelectedName === SEARCH_TYPE.GET_ALL
+          ? SEARCH_TYPE.GET_ALL
+          : selectedName.toLowerCase()
+      ),
     };
 
     console.log("part: ", part);
 
     dispatch(getPartByKeyAndType(part));
-
   };
 
   return (
@@ -100,16 +102,17 @@ function Search() {
               Search
             </button>
           </div>
-            <p className="text-xs text-gray-500 mt-2">
-              If you want to search all models, leave the models field empty.
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              Click on any card to view its preformance data and click on the heart to save it to your favorites.
-              </p>
+          <p className="text-xs text-gray-500 mt-2">
+            If you want to search all models, leave the models field empty.
+          </p>
+          <p className="text-xs text-gray-500 mt-2">
+            Click on any card to view its preformance data and click on the
+            heart to save it to your favorites.
+          </p>
         </div>
       </div>
       {partsFound.length !== 0 && (
-        <div ref={resultsRef}>
+        <div className="bg-gray-100" ref={resultsRef}>
           <PartFound partsFound={partsFound} />
         </div>
       )}

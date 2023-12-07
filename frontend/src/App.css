@@ -1,8 +1,11 @@
 * {
-  /* background-color: black; */
+  /* background-color: rgb(88, 47, 47); */
 }
 
 
 .cardClickable {
   cursor: pointer;
+  height: 110%;
 }
+
+

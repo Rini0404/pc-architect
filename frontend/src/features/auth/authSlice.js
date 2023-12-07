@@ -20,13 +20,9 @@ export const register = createAsyncThunk(
     try {
       return await authService.register(user);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.response.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      const errorMessage = error.message || 'An error occurred';
+      console.log('error in register slice: ', errorMessage);
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
@@ -66,9 +62,9 @@ export const savePart = createAsyncThunk('parts/savePart', async (partData, thun
       console.log('No token found');
       return thunkAPI.rejectWithValue('Authentication token not found');
     }
-    
+
     const response = await authService.savePart(partData, parsedUser.token);
-    return response.data; 
+    return response.data;
 
   } catch (error) {
     const message = error?.error || error?.message || error.toString();
@@ -178,7 +174,9 @@ export const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
+        state.isSuccess = false;
         state.isError = true;
+        console.log('action.payload in register.rejected', action.payload)
         state.message = action.payload;
         state.user = null;
       })
@@ -233,7 +231,7 @@ export const authSlice = createSlice({
         state.message = action.payload;
         state.user = null;
       })
-    },
+  },
 });
 
 export const { reset, setUserParts } = authSlice.actions;
