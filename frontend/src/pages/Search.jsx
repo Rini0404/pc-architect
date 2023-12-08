@@ -110,7 +110,7 @@ function Search() {
         </div>
       </div>
       {partsFound.length !== 0 && (
-        <div className="bg-gray-100" ref={resultsRef}>
+        <div className=" py-20 px-4 bg-gray-100" ref={resultsRef}>
           <PartFound partsFound={partsFound} />
         </div>
       )}

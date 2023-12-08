@@ -8,7 +8,7 @@ function Favorites() {
   return (
     <>
       {user.savedParts.length > 0 ? (
-        <div className=" pt-16 flex flex-col items-center justify-center">
+        <div className=" flex flex-col py-20 px-4 h-screen">
           <PartFound isFavAlready={true} partsFound={user.savedParts} />
         </div>
       ) : (

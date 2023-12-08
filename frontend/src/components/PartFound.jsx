@@ -90,7 +90,7 @@ export default function PartFound({
   return (
     <>
       {doHaveParts ? (
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 overflow-x-auto max-w-full">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3  max-w-full">
           {partsFound.map((item) => (
             <div key={item.id} className="md:p-12 lg:p-8 xl:p-12  ">
               <div
