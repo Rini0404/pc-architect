@@ -18,7 +18,10 @@ export const register = createAsyncThunk(
   "auth/register",
   async (user, thunkAPI) => {
     try {
-      return await authService.register(user);
+      const { data } = await authService.register(user);
+
+      return data;
+
     } catch (error) {
       const errorMessage = error.message || 'An error occurred';
       console.log('error in register slice: ', errorMessage);
@@ -170,6 +173,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
+        state.isAuthenticated = true;
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;

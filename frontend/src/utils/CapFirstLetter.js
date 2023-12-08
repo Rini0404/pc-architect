@@ -1,7 +1,6 @@
-
-
-//capetalize the first letter in srtring 
 export const capFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    if (typeof string === 'string' && string.length > 0) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    return string;
 }
-

@@ -15,9 +15,7 @@ const models = {
 };
 
 const registerUser = asyncHandler(async (req, res, next) => {
-
   try {
-
     const { firstName, lastName, email, password } = req.body;
 
     if (!firstName || !lastName || !email || !password) {
@@ -49,21 +47,29 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
     const savedUser = await newUser.save();
 
-    res.status(201).json({
+    // Exclude password from the response
+    const { password: _, ...userResponse } = savedUser.toObject();
+
+    // Generate token
+    const token = generateToken(savedUser._id);
+
+    userResponse.name = userResponse.firstName + " " + userResponse.lastName,
+
+
+    console.log("savedUser", { ...userResponse, token });
+
+    res.status(200).json({
       success: true,
-      data: savedUser,
+      data: { ...userResponse, token }, // Include token in the response
     });
 
   } catch (error) {
-
     console.log("error in registerUser", error);
     res.status(400).json({
       success: false,
       error: error.message,
     });
-
   }
-
 });
 
 const getAllUsers = asyncHandler(async (req, res, next) => {

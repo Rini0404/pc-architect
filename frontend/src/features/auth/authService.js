@@ -32,7 +32,7 @@ const register = async (userData) => {
     const response = await axios.post(API_URL, userData)
   
     if (response.data) {
-      localStorage.setItem('user', JSON.stringify(response.data))
+      localStorage.setItem('user', JSON.stringify(response.data.data))
     }
   
     return response.data
@@ -94,6 +94,8 @@ const getMe = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
+
+  console.log("GET ME ROUTE")
 
   const response = await axios.get(API_URL + 'me', config);
 
