@@ -95,8 +95,6 @@ const getMe = async (token) => {
     },
   };
 
-  console.log("GET ME ROUTE")
-
   const response = await axios.get(API_URL + 'me', config);
 
   return response.data;
